@@ -17,6 +17,24 @@ public class Commande {
 
     public Commande() {}
 
+    public Commande(int id_user, int prix, boolean valide, Date date_echeance, String point_relai) {
+        this.id_user = id_user;
+        this.prix = prix;
+        this.valide = valide;
+        this.date_echeance = date_echeance;
+        this.point_relai = point_relai;
+    }
+
+    public Commande(int id_user, int prix) {
+        this.id_user = id_user;
+        this.prix = prix;
+        this.valide = false;
+        this.date_echeance = null;
+        this.point_relai = null;
+    }
+
+
+
     public Commande(int id, int id_user, int prix, boolean valide, Date date_echeance, String point_relai) {
         this.id = id;
         this.id_user = id_user;

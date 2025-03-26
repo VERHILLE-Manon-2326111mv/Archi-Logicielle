@@ -1,5 +1,7 @@
 package fr.univamu.iut.commande.Commande;
 
+import fr.univamu.iut.commande.Commande_Panier.Commande_Panier;
+
 import java.io.Closeable;
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,17 +103,125 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
 
 
     @Override
-    public boolean updateCommande( int id, int id_user, int prix, boolean valide, Date date_echeance, String point_relai) {
+    public boolean updateCommande( Commande commande ) {
         String query = "UPDATE Commande SET id_user=?, prix=?, valide=?, date_echeance=?, point_relai=?  where id=?";
         int nbRowModified = 0;
 
         try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
-            ps.setInt(1, id_user);
-            ps.setInt(2, prix);
-            ps.setBoolean(3, valide);
-            ps.setDate(4, (java.sql.Date) date_echeance);
-            ps.setString(5, point_relai);
+            ps.setInt(1, commande.getId_user());
+            ps.setInt(2, commande.getPrix());
+            ps.setBoolean(3, commande.isValide());
+            java.util.Date utilDate = commande.getDate_echeance();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            ps.setDate(4, (java.sql.Date) sqlDate);
+            ps.setString(5, commande.getPoint_relai());
+            ps.setInt(6, commande.getId());
 
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean deleteCommande( Commande commande ) {
+        String query = "DELETE FROM Commande WHERE id=?";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, commande.getId());
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean createCommande( Commande commande ) {
+        String query = "INSERT INTO Commande (id_user, prix,valide, date_echeance, point_relai) VALUES (?, ?, false, null, null)";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, commande.getId_user());
+            ps.setInt(2, commande.getPrix());
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean valideCommande(Commande commande) {
+        String query = "UPDATE Commande SET valide=true, date_echeance=?, point_relai=? where id=?";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(3, commande.getId());
+            java.util.Date utilDate = commande.getDate_echeance();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            ps.setDate(1, sqlDate);
+            ps.setString(2, commande.getPoint_relai());
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean addPanier(Commande_Panier commande) {
+        String query = "INSERT INTO Commande_Panier (id_commande, id_panier, quantite) VALUES (?, ?, ?)";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, commande.getId_commande());
+            ps.setInt(2, commande.getId_panier());
+            ps.setInt(3, commande.getQuantite());
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean updatePanier(Commande_Panier commande) {
+        String query = "UPDATE Commande_Panier SET quantite=? where id_commande=? and id_panier=?";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, commande.getQuantite());
+            ps.setInt(2, commande.getId_commande());
+            ps.setInt(3, commande.getId_panier());
+
+            nbRowModified = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public boolean deletePanier(Commande_Panier commande) {
+        String query = "DELETE FROM Commande_Panier WHERE id_commande=? and id_panier=?";
+        int nbRowModified = 0;
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, commande.getId_commande());
+            ps.setInt(2, commande.getId_panier());
 
             nbRowModified = ps.executeUpdate();
         } catch (SQLException e) {

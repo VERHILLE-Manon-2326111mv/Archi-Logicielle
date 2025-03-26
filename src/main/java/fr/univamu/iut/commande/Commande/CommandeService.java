@@ -1,10 +1,12 @@
 package fr.univamu.iut.commande.Commande;
 
+import fr.univamu.iut.commande.Commande_Panier.Commande_Panier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import java.util.ArrayList;
+import java.util.Date;
 
 @ApplicationScoped
 public class CommandeService {
@@ -41,7 +43,31 @@ public class CommandeService {
         }
     }
 
-    public boolean updateCommande(int id, Commande commande) {
-        return commandeRepo.updateCommande(id, commande.getId_user(), commande.getPrix(), commande.isValide(), commande.getDate_echeance(), commande.getPoint_relai());
+    public boolean updateCommande(Commande commande) {
+        return commandeRepo.updateCommande(commande);
+    }
+
+    public boolean deleteCommande(Commande commande) {
+        return commandeRepo.deleteCommande(commande);
+    }
+
+    public boolean createCommande(Commande commande) {
+        return commandeRepo.createCommande(commande);
+    }
+
+    public boolean valideCommande(Commande commande) {
+        return commandeRepo.valideCommande(commande);
+    }
+
+    public boolean addPanier(Commande_Panier commande) {
+        return commandeRepo.addPanier(commande);
+    }
+
+    public boolean updatePanier(Commande_Panier commande) {
+        return commandeRepo.updatePanier(commande);
+    }
+
+    public boolean deletePanier(Commande_Panier commande) {
+        return commandeRepo.deletePanier(commande);
     }
 }
