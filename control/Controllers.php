@@ -48,19 +48,4 @@ class Controllers
 
         }
     }
-
-    public function annoncesAction( $data, $annoncesCheck)
-    {
-        $annoncesCheck->getAllAnnonces($data);
-    }
-
-    public function postAction($id, $data, $annoncesCheck)
-    {
-        $annoncesCheck->getPost($id, $data);
-    }
-
-    public function annonceCreationAction($id, $info, $data, $annonceCreation)
-    {
-        $annonceCreation->createAnnonce($id, $info, $data);
-    }
 }
