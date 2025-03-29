@@ -5,14 +5,14 @@ namespace data;
 use service\AccessInterface;
 include_once "service/AccessInterface.php";
 
-use domain\Commandes;
-include_once "domain/Commandes.php";
+use domain\Product;
+include_once "domain/Product.php";
 
-class ApiCommandes implements AccessInterface
+class ApiProducts implements AccessInterface
 {
     public function curlApi()
     {
-        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/";
+        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/Api_User_Produit-Albano/Api_User_Produit/src/main/java/fr/univamu/iut/api_user_produit/produit/ProduitRessource.java";
         $curlConnection = curl_init();
 
         $params = array(

@@ -12,6 +12,8 @@ class ViewHampers extends View
 
         $this->title = 'Liste des paniers';
 
-        $this->content .= '<a href="/index.php/accueil">Retour</a>';
+        $this->content = $presenter->getAllHampersHTML();
+
+        $this->content .= '<a href="/index.php/home">Retour</a>';
     }
 }

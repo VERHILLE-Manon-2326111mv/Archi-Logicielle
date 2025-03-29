@@ -14,6 +14,6 @@ class ViewProducts extends View
 
         $this->content = $presenter->getAllProductsHTML();
 
-        $this->content .= '<a href="/index.php/accueil">Retour</a>';
+        $this->content .= '<a href="/index.php/home">Retour</a>';
     }
 }

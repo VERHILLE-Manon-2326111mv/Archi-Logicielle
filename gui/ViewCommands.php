@@ -12,6 +12,8 @@ class ViewCommands extends View
 
         $this->title = 'Passer une commande';
 
-        $this->content .= '<a href="/index.php/accueil">Retour</a>';
+        $this->content = $presenter->getAllHampersHTML();
+
+        $this->content .= '<a href="/index.php/home">Retour</a>';
     }
 }

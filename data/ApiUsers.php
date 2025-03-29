@@ -5,14 +5,22 @@ namespace data;
 use service\AccessInterface;
 include_once "service/AccessInterface.php";
 
-use domain\Commandes;
-include_once "domain/Commandes.php";
+use domain\User;
+include_once "domain/User.php";
 
-class ApiCommandes implements AccessInterface
+class ApiUsers implements AccessInterface
 {
+    public function getAllUserClient()
+    {
+        $apiUrl = $this->curlApi();
+
+        // TODO : implementer la methode getAllUsers
+        return array();
+    }
+
     public function curlApi()
     {
-        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/";
+        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/Api_User_Produit-Albano/Api_User_Produit/src/main/java/fr/univamu/iut/api_user_produit/user/UserRessource.java";
         $curlConnection = curl_init();
 
         $params = array(
@@ -23,11 +31,6 @@ class ApiCommandes implements AccessInterface
         curl_setopt_array($curlConnection, $params);
         $response = curl_exec($curlConnection);
         curl_close($curlConnection);
-
-//        if (!$response)
-//            echo curl_error($curlConnection);
-//
-//        $response = json_decode($response, true);
 
         return $response;
     }

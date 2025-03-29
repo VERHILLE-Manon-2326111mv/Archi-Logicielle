@@ -13,8 +13,15 @@ class ViewHome extends View
 
         $this->content = '<h1>Home</h1>';
 
-        $this->content .= '<a href="/index.php/produits">Voir les produits</a><br>';
-        $this->content .= '<a href="/index.php/paniers">Voir les paniers</a><br>';
-        $this->content .= '<a href="/index.php/commandes">Passer une commande</a><br>';
+        $this->content .= '
+            <nav>
+                <ul>
+                    <li><a href="/index.php">Acceuil</a></li>
+                    <li><a href="/index.php/annonces">Annonces IUT</a></li>
+                    <li><a href="/index.php/annoncesAlternance">Alternance - Pôle Emploi</a></li>
+                    <li><a href="/index.php/annoncesEmploi">Jobs - Pôle Emploi</a></li>
+                    <li><a href="/index.php/logout">Déconnexion</a></li>
+                </ul>
+            </nav>';
     }
 }
