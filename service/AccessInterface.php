@@ -4,5 +4,5 @@ namespace service;
 
 interface AccessInterface
 {
-    public function curlApi();
+    public function curlApiToJSON(string $end);
 }

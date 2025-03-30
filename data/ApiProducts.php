@@ -10,24 +10,54 @@ include_once "domain/Product.php";
 
 class ApiProducts implements AccessInterface
 {
-    public function curlApi()
+    public function getAllProducts()
     {
-        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/Api_User_Produit-Albano/Api_User_Produit/src/main/java/fr/univamu/iut/api_user_produit/produit/ProduitRessource.java";
-        $curlConnection = curl_init();
+        $response = $this->curlApiToJSON("");
 
+        $products = array();
+        foreach ($response as $product){
+
+            $id = $product['id_produit'];
+            $name = $product['nom'];
+            $quantity = $product['quantity'];
+            $price = $product['prix'];
+            $unite = $product['unite'];
+
+            $currentProduct = new Product();
+            $products[$id] = $currentProduct;
+        }
+
+        // enregistrement des produits dans un fichier sur le serveur (serialisation)
+        $productSerialized = serialize($products);
+        file_put_contents('data/cache_alternance', $productSerialized);
+
+        return $products;
+    }
+
+    public function curlApiToJSON(string $end)
+    {
+        $apiUrl = "http://localhost:8080/api_user_produit-1.0-SNAPSHOT/api/produit" . $end;
+
+        // initialisation de la connexion à l'API avec CURL
+        $curlConnection  = curl_init();
+
+        // définition des paramètres de la requête CURL
         $params = array(
-            CURLOPT_URL => $apiUrl,
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_URL =>  $apiUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => array('accept: application/json')
         );
-
         curl_setopt_array($curlConnection, $params);
+
+        // exécution de la requête HTTP avec CURL
         $response = curl_exec($curlConnection);
         curl_close($curlConnection);
 
-//        if (!$response)
-//            echo curl_error($curlConnection);
-//
-//        $response = json_decode($response, true);
+        if( !$response )
+            echo curl_error($curlConnection);
+
+        // transformation du JSON récupéré en tableau associatif
+        $response = json_decode( $response, true );
 
         return $response;
     }

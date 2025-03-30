@@ -3,21 +3,21 @@
 namespace domain;
 class User
 {
-    protected $login;
+    protected $id_user;
     protected $password;
     protected $name;
     protected $role;
 
-    public function __construct($login, $password, $name, $role)
+    public function __construct($id_user, $password, $name, $role)
     {
-        $this->login = $login;
+        $this->id_user = $id_user;
         $this->password = $password;
         $this->name = $name;
         $this->role = $role;
     }
 
-    public function getLogin()
+    public function getName()
     {
-        return $this->login;
+        return $this->name;
     }
 }

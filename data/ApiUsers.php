@@ -10,27 +10,93 @@ include_once "domain/User.php";
 
 class ApiUsers implements AccessInterface
 {
-    public function getAllUserClient()
-    {
-        $apiUrl = $this->curlApi();
+    public function getAllUsers(){
+        $response = $this->curlApiToJSON("");
 
-        // TODO : implementer la methode getAllUsers
-        return array();
+        $users = array();
+        foreach ($response as $user){
+
+            $id = $user['id_user'];
+            $password = $user['password'];
+            $name = $user['nom'];
+            $role = $user['role'];
+
+            $currentUser = new User($id, $password, $name, $role);
+            $users[$id] = $currentUser;
+        }
+
+        // enregistrement des utilisateurs dans un fichier sur le serveur (serialisation)
+        $usersSerialized = serialize($users);
+        file_put_contents('data/cache_alternance', $usersSerialized);
+
+        return $users;
     }
 
-    public function curlApi()
+    public function getAllClients()
     {
-        $apiUrl = "https://github.com/VERHILLE-Manon-2326111mv/Archi-Logicielle/tree/Api_User_Produit-Albano/Api_User_Produit/src/main/java/fr/univamu/iut/api_user_produit/user/UserRessource.java";
-        $curlConnection = curl_init();
+        $response = $this->curlApiToJSON("/client");
 
+        $clients = array();
+        foreach ($response as $client){
+
+            $id = $client['id_user'];
+            $password = $client['password'];
+            $name = $client['nom'];
+            $role = $client['role'];
+
+            $currentUser = new User($id, $password, $name, $role);
+            $users[$id] = $currentUser;
+        }
+
+        // enregistrement des clients dans un fichier sur le serveur (serialisation)
+        $usersSerialized = serialize($clients);
+        file_put_contents('data/cache_user', $usersSerialized);
+
+        return $clients;
+    }
+
+    public function getUser(int $id){
+        $response = $this->curlApiToJSON('/'. $id);
+
+        if($response !== null){
+            $id = $response['id_user'];
+            $password = $response['password'];
+            $name = $response['nom'];
+            $role = $response['role'];
+
+            $currentUser = new User($id, $password, $name, $role);
+
+            return $currentUser;
+        }else{
+            return null;
+        }
+    }
+
+    public function curlApiToJSON(string $end)
+    {
+        // URL de l'API
+        $apiUrl = "http://localhost:8080/api_user_produit-1.0-SNAPSHOT/api/user".$end;
+
+        // initialisation de la connexion à l'API avec CURL
+        $curlConnection  = curl_init();
+
+        // définition des paramètres de la requête CURL
         $params = array(
-            CURLOPT_URL => $apiUrl,
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_URL =>  $apiUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => array('accept: application/json')
         );
-
         curl_setopt_array($curlConnection, $params);
+
+        // exécution de la requête HTTP avec CURL
         $response = curl_exec($curlConnection);
         curl_close($curlConnection);
+
+        if( !$response )
+            echo curl_error($curlConnection);
+
+        // transformation du JSON récupéré en tableau associatif
+        $response = json_decode( $response, true );
 
         return $response;
     }
