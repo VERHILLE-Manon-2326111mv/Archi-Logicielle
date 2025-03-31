@@ -30,7 +30,7 @@ public class PanierRessource {
     }
 
     @POST
-    @Consumes("application/json")
+    @Path("/create")
     @Produces("application/json")
     public Response createPanier(Panier panier) {
         Panier createdPanier = panierService.panierRepo.createPanier(panier);
@@ -41,7 +41,7 @@ public class PanierRessource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("/update/{id}")
     @Consumes("application/json")
     public Response updatePanier(@PathParam("id") int id, Panier panier) {
         panierService.panierRepo.updatePanier(id, panier.getNom(), panier.getDatemaj(), panier.getPrix(), panier.getQuantite());
@@ -49,7 +49,7 @@ public class PanierRessource {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/delete/{id}")
     public Response deletePanier(@PathParam("id") int id) {
         panierService.panierRepo.deletePanier(id);
         return Response.ok("deleted").build();
