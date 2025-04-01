@@ -1,5 +1,7 @@
 package fr.univamu.iut.api_panier.panier;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.*;
 
 

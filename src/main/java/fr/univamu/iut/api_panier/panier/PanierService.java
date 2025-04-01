@@ -7,15 +7,16 @@ import jakarta.json.bind.JsonbBuilder;
 
 import java.util.ArrayList;
 
+
 @ApplicationScoped
 public class PanierService{
 
     protected PanierRepositoryInterface panierRepo;
 
     @Inject
-    public PanierService(PanierRepositoryInterface panierRepo){
-        this.panierRepo = panierRepo;
-    }
+    public PanierService(PanierRepositoryInterface panierRepo){this.panierRepo = panierRepo;}
+
+    public PanierService(){}
 
     public String getPanierJSON(int id){
         Panier panier = panierRepo.getPanier(id);

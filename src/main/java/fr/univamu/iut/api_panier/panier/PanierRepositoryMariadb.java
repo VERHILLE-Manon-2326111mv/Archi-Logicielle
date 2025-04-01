@@ -1,19 +1,26 @@
 package fr.univamu.iut.api_panier.panier;
 
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+
 import java.io.Closeable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class PanierRepositoryMariadb implements PanierRepositoryInterface, Closeable {
 
     private final Connection dbConnection;
 
-    public PanierRepositoryMariadb(String infoConnection, String user, String password) throws SQLException, ClassNotFoundException {
+    public PanierRepositoryMariadb(String infoConnection, String user, String password) throws java.sql.SQLException, java.lang.ClassNotFoundException  {
         Class.forName("org.mariadb.jdbc.Driver");
         dbConnection = DriverManager.getConnection(infoConnection, user, password);
     }
+
 
     @Override
     public void close(){

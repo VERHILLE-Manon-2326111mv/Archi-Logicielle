@@ -19,7 +19,7 @@ public class PanierRessource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces("application/json")
     public String getPanier(@PathParam("id") int id) {
         String result = panierService.getPanierJSON(id);
@@ -48,7 +48,8 @@ public class PanierRessource {
         return Response.ok("updated").build();
     }
 
-    @DELETE
+
+    @PUT
     @Path("/delete/{id}")
     public Response deletePanier(@PathParam("id") int id) {
         panierService.panierRepo.deletePanier(id);
