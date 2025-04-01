@@ -1,5 +1,8 @@
 package fr.univamu.iut.commande.Commande;
 
+import fr.univamu.iut.commande.Produit.Produit;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Commande {
@@ -15,9 +18,12 @@ public class Commande {
 
     protected String point_relai;
 
+    protected ArrayList<Produit> panier = null;
+
     public Commande() {}
 
-    public Commande(int id_user, int prix, boolean valide, Date date_echeance, String point_relai) {
+
+    public Commande(int id_user, int prix, boolean valide, Date date_echeance, String point_relai ) {
         this.id_user = id_user;
         this.prix = prix;
         this.valide = valide;
@@ -90,5 +96,13 @@ public class Commande {
 
     public void setPoint_relai(String point_relai) {
         this.point_relai = point_relai;
+    }
+
+    public ArrayList<Produit> getPanier() {
+        return panier;
+    }
+
+    public void setPanier(ArrayList<Produit> panier) {
+        this.panier = panier;
     }
 }

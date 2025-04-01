@@ -101,4 +101,12 @@ public class CommandeRessource {
         }
         return Response.ok("deleted").build();
     }
+
+    @GET
+    @Path("/external")
+    @Produces("application/json")
+    public String getExternalApiResponse() {
+        return service.callExternalApi("http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/");
+    }
+
 }

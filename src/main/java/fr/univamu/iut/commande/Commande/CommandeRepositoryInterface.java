@@ -25,6 +25,8 @@ public interface CommandeRepositoryInterface {
 
     public boolean valideCommande(Commande commande);
 
+    public ArrayList<Commande_Panier> getAllPanierCommande(int id);
+
     public boolean addPanier(Commande_Panier commande);
 
     public boolean updatePanier(Commande_Panier commande);

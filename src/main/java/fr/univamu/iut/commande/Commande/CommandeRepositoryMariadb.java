@@ -6,6 +6,7 @@ import java.io.Closeable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Classe permettant d'accèder aux commandes stockés dans une base de données Mariadb
@@ -229,5 +230,33 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         }
 
         return ( nbRowModified != 0 );
+    }
+
+    @Override
+    public ArrayList<Commande_Panier> getAllPanierCommande(int id) {
+        ArrayList<Commande_Panier> listCommandePanier ;
+
+        String query = "SELECT * FROM Commande_Panier WHERE id_commande=?";
+
+        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
+
+            listCommandePanier = new ArrayList<>();
+
+            while ( result.next() )
+            {
+                int id_commande = result.getInt("id_commande");
+                int id_panier = result.getInt("id_panier");
+                int quantite = result.getInt("quantite");
+
+                Commande_Panier currentCommandePanier = new Commande_Panier(id_commande, id_panier, quantite);
+
+                listCommandePanier.add(currentCommandePanier);
+            }
+            return listCommandePanier;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
