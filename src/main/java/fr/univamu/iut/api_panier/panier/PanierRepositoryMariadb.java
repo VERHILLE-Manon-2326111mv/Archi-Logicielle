@@ -1,5 +1,6 @@
 package fr.univamu.iut.api_panier.panier;
 
+import fr.univamu.iut.api_panier.Panier_Produit.Panier_Produit;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
@@ -16,7 +17,7 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
 
     private final Connection dbConnection;
 
-    public PanierRepositoryMariadb(String infoConnection, String user, String password) throws java.sql.SQLException, java.lang.ClassNotFoundException  {
+    public PanierRepositoryMariadb(String infoConnection, String user, String password) throws SQLException, ClassNotFoundException {
         Class.forName("org.mariadb.jdbc.Driver");
         dbConnection = DriverManager.getConnection(infoConnection, user, password);
     }
@@ -137,5 +138,88 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
             throw new RuntimeException(e);
         }
         return -1;
+    }
+
+    @Override
+    public void addProduitPanier(Panier_Produit panier_produit) {
+        String query = "INSERT INTO Panier_Produit (id_panier, id_produit, quantite) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
+            stmt.setInt(1, panier_produit.getId_panier());
+            stmt.setInt(2, panier_produit.getId_produit());
+            stmt.setInt(3, panier_produit.getQuantite());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteProduitPanier(Panier_Produit panier_produit) {
+        String query = "DELETE FROM Panier_Produit WHERE id_panier = ? AND id_produit = ?";
+        try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
+            stmt.setInt(1, panier_produit.getId_panier());
+            stmt.setInt(2, panier_produit.getId_produit());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateProduitPanier(Panier_Produit panier_produit) {
+        String query = "UPDATE Panier_Produit SET quantite = ? WHERE id_panier = ? AND id_produit = ?";
+
+        try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
+            stmt.setInt(1, panier_produit.getQuantite());
+            stmt.setInt(2, panier_produit.getId_panier());
+            stmt.setInt(3, panier_produit.getId_produit());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Panier_Produit> getPaniersProduit() {
+        ArrayList<Panier_Produit> paniers = new ArrayList<>();
+        String query = "SELECT * FROM Panier_Produit";
+
+        try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
+            ResultSet result = stmt.executeQuery();
+            while (result.next()) {
+                int id_panier = result.getInt("id_panier");
+                int id_produit = result.getInt("id_produit");
+                int quantite = result.getInt("quantite");
+                Panier_Produit panier_produit = new Panier_Produit(id_panier, id_produit, quantite);
+                paniers.add(panier_produit);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return paniers;
+    }
+
+    @Override
+    public Panier_Produit getPaniersProduit(int id_produit) {
+        Panier_Produit panier_produit = null;
+        String query = "SELECT * FROM Panier_Produit WHERE id_produit = ?";
+
+        try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
+            stmt.setInt(1, id_produit);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                int id_panier = result.getInt("id_panier");
+                int quantite = result.getInt("quantite");
+                panier_produit = new Panier_Produit(id_panier, id_produit, quantite);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return panier_produit;
     }
 }

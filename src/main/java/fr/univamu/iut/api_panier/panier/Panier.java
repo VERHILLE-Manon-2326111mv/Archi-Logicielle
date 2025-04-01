@@ -1,5 +1,6 @@
 package fr.univamu.iut.api_panier.panier;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /***
@@ -12,6 +13,7 @@ public class Panier {
     protected Date datemaj;
     protected int prix;
     protected int quantite;
+    protected ArrayList<Produit> produits = null;
 
     public Panier(String nom, Date datemaj, int prix, int quantite) {
         this.nom = nom;
@@ -58,6 +60,14 @@ public class Panier {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public ArrayList<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(ArrayList<Produit> produits) {
+        this.produits = produits;
     }
 
     @Override
