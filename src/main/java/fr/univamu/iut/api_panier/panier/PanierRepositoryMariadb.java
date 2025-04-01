@@ -1,7 +1,6 @@
-package fr.univamu.fr.iut.api_panier;
+package fr.univamu.iut.api_panier.panier;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;

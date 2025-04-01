@@ -1,4 +1,4 @@
-package fr.univamu.fr.iut.api_panier;
+package fr.univamu.iut.api_panier.panier;
 
 import java.util.*;
 
