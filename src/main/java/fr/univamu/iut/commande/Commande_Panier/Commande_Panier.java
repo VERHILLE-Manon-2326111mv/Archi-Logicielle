@@ -16,7 +16,6 @@ public class Commande_Panier {
         this.quantite = quantite;
     }
 
-
     public int getId_commande() {
         return id_commande;
     }

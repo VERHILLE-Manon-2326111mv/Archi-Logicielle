@@ -40,15 +40,14 @@ public class CommandeService {
 
     public String getCommandeJSON(int id) {
         ArrayList<Commande_Panier> paniers = commandeRepo.getAllPanierCommande(id);
-        ArrayList<Produit> paniersProduit = new ArrayList<>(); // Liste d'objets Produit
+        ArrayList<Produit> paniersProduit = new ArrayList<>();
 
-        Jsonb jsonb = JsonbBuilder.create(); // Initialisation de Jsonb
+        Jsonb jsonb = JsonbBuilder.create();
 
         for (Commande_Panier panier : paniers) {
             String EXTERNAL_API_URL_PRODUIT = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/";
             String jsonResponse = callExternalApi(EXTERNAL_API_URL_PRODUIT + panier.getId_panier());
 
-            // Désérialisation de la réponse en un objet Produit
             Produit produit = jsonb.fromJson(jsonResponse, Produit.class);
             paniersProduit.add(produit);
         }
