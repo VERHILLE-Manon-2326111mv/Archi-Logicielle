@@ -1,6 +1,7 @@
 package fr.univamu.iut.commande.Commande;
 
 import fr.univamu.iut.commande.Commande_Panier.Commande_Panier;
+import fr.univamu.iut.commande.Panier.Panier;
 import fr.univamu.iut.commande.Produit.Produit;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -40,16 +41,19 @@ public class CommandeService {
 
     public String getCommandeJSON(int id) {
         ArrayList<Commande_Panier> paniers = commandeRepo.getAllPanierCommande(id);
-        ArrayList<Produit> paniersProduit = new ArrayList<>();
+        ArrayList<Panier> paniersProduit = new ArrayList<>();
 
         Jsonb jsonb = JsonbBuilder.create();
 
         for (Commande_Panier panier : paniers) {
-            String EXTERNAL_API_URL_PRODUIT = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/";
-            String jsonResponse = callExternalApi(EXTERNAL_API_URL_PRODUIT + panier.getId_panier());
+            String EXTERNAL_API_URL_PANIER = "http://localhost:7150/API_Panier-1.0-SNAPSHOT/api/panier/";
 
-            Produit produit = jsonb.fromJson(jsonResponse, Produit.class);
-            paniersProduit.add(produit);
+            String jsonResponse = callExternalApi(EXTERNAL_API_URL_PANIER + panier.getId_panier());
+
+            System.out.println("Réponse de l'API : " + jsonResponse);
+
+            Panier panierr = jsonb.fromJson(jsonResponse, Panier.class);
+            paniersProduit.add(panierr);
         }
 
         Commande myCommande = commandeRepo.getCommande(id);

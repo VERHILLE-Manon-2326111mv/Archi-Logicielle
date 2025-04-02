@@ -1,5 +1,6 @@
 package fr.univamu.iut.commande.Commande;
 
+import fr.univamu.iut.commande.Panier.Panier;
 import fr.univamu.iut.commande.Produit.Produit;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Commande {
 
     protected String point_relai;
 
-    protected ArrayList<Produit> panier = null;
+    protected ArrayList<Panier> panier = null;
 
     public Commande() {}
 
@@ -98,11 +99,11 @@ public class Commande {
         this.point_relai = point_relai;
     }
 
-    public ArrayList<Produit> getPanier() {
+    public ArrayList<Panier> getPanier() {
         return panier;
     }
 
-    public void setPanier(ArrayList<Produit> panier) {
+    public void setPanier(ArrayList<Panier> panier) {
         this.panier = panier;
     }
 }
