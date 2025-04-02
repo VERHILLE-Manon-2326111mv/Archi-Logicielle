@@ -142,7 +142,7 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
 
     @Override
     public void addProduitPanier(Panier_Produit panier_produit) {
-        String query = "INSERT INTO Panier_Produit (id_panier, id_produit, quantite) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Panier_Produit (id_panier, id_produit, quantite_produit) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
             stmt.setInt(1, panier_produit.getId_panier());
             stmt.setInt(2, panier_produit.getId_produit());
@@ -168,7 +168,7 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
 
     @Override
     public void updateProduitPanier(Panier_Produit panier_produit) {
-        String query = "UPDATE Panier_Produit SET quantite = ? WHERE id_panier = ? AND id_produit = ?";
+        String query = "UPDATE Panier_Produit SET quantite_produit = ? WHERE id_panier = ? AND id_produit = ?";
 
         try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
             stmt.setInt(1, panier_produit.getQuantite());
@@ -190,8 +190,8 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
             while (result.next()) {
                 int id_panier = result.getInt("id_panier");
                 int id_produit = result.getInt("id_produit");
-                int quantite = result.getInt("quantite");
-                Panier_Produit panier_produit = new Panier_Produit(id_panier, id_produit, quantite);
+                int quantite_produit = result.getInt("quantite_produit");
+                Panier_Produit panier_produit = new Panier_Produit(id_panier, id_produit, quantite_produit);
                 paniers.add(panier_produit);
             }
 
@@ -212,8 +212,8 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
                 int id_panier = result.getInt("id_panier");
-                int quantite = result.getInt("quantite");
-                panier_produit = new Panier_Produit(id_panier, id_produit, quantite);
+                int quantite_produit = result.getInt("quantite_produit");
+                panier_produit = new Panier_Produit(id_panier, id_produit, quantite_produit);
 
             }
 

@@ -5,12 +5,12 @@ public class Panier_Produit implements java.io.Serializable
 
     private int id_panier;
     private int id_produit;
-    private int quantite;
+    private int quantite_produit;
 
-    public Panier_Produit(int id_panier, int id_produit, int quantite) {
+    public Panier_Produit(int id_panier, int id_produit, int quantite_produit) {
         this.id_panier = id_panier;
         this.id_produit = id_produit;
-        this.quantite = quantite;
+        this.quantite_produit = quantite_produit;
     }
 
     public Panier_Produit() {
@@ -26,7 +26,7 @@ public class Panier_Produit implements java.io.Serializable
     }
 
     public int getQuantite() {
-        return quantite;
+        return quantite_produit;
     }
 
 
@@ -39,7 +39,7 @@ public class Panier_Produit implements java.io.Serializable
     }
 
     public void setQuantite(int quantite) {
-        this.quantite = quantite;
+        this.quantite_produit = quantite;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Panier_Produit implements java.io.Serializable
         return "Panier_Produit{" +
                 ", id_panier=" + id_panier +
                 ", id_produit=" + id_produit +
-                ", quantite=" + quantite +
+                ", quantite=" + quantite_produit +
                 '}';
     }
 
