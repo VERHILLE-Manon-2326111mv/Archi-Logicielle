@@ -1,6 +1,7 @@
 package fr.univamu.iut.api_panier.panier;
 
 import fr.univamu.iut.api_panier.Panier_Produit.Panier_Produit;
+import fr.univamu.iut.api_panier.Produit.Produit;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;

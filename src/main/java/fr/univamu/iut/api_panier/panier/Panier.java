@@ -1,5 +1,7 @@
 package fr.univamu.iut.api_panier.panier;
 
+import fr.univamu.iut.api_panier.Produit.Produit;
+
 import java.util.ArrayList;
 import java.util.Date;
 
