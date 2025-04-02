@@ -2,6 +2,7 @@ package fr.univamu.iut.api_panier.Produit;
 
 import java.util.Date;
 
+// Classe prise dans l'api Produit de Coline
 public class Produit {
     protected int id_produit;
 
