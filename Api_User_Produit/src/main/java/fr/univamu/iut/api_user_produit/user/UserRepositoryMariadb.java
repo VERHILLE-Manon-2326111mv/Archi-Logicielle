@@ -7,7 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Classe permettant d'accèder aux users stockés dans une base de données Mariadb
+ * Classe permettant d'accéder aux utilisateurs stockés dans une base de données MariaDB.
+ * Implémente l'interface {@link UserRepositoryInterface} et l'interface {@link Closeable}.
  */
 public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable {
 
@@ -21,13 +22,18 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
      * @param infoConnection chaîne de caractères avec les informations de connexion
      *                       (p.ex. jdbc:mariadb://mysql-[compte].alwaysdata.net/[compte]_library_db
      * @param user chaîne de caractères contenant l'identifiant de connexion à la base de données
-     * @param pwd chaîne de caractères contenant le mot de passe à utiliser
+     * @param pwd            Mot de passe de connexion à la base de données.
+     * @throws SQLException             En cas de problème de connexion à la base de données.
+     * @throws ClassNotFoundException   Si le driver JDBC de MariaDB n'est pas trouvé.
      */
     public UserRepositoryMariadb(String infoConnection, String user, String pwd ) throws java.sql.SQLException, java.lang.ClassNotFoundException {
         Class.forName("org.mariadb.jdbc.Driver");
         dbConnection = DriverManager.getConnection( infoConnection, user, pwd ) ;
     }
 
+    /**
+     * Ferme la connexion à la base de données.
+     */
     @Override
     public void close() {
         try{
@@ -38,6 +44,12 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         }
     }
 
+    /**
+     * Récupère un utilisateur à partir de son identifiant.
+     *
+     * @param id_user Identifiant de l'utilisateur.
+     * @return L'objet {@link User} correspondant ou {@code null} si non trouvé.
+     */
     @Override
     public User getUser(int id_user) {
         User selectedUser = null;
@@ -63,6 +75,11 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         return selectedUser;
     }
 
+    /**
+     * Récupère la liste de tous les utilisateurs.
+     *
+     * @return Une liste d'objets {@link User}.
+     */
     @Override
     public ArrayList<User> getAllUser() {
         ArrayList<User> listUser ;
@@ -94,6 +111,11 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         return listUser;
     }
 
+    /**
+     * Récupère tous les utilisateurs ayant le rôle "client".
+     *
+     * @return Une liste d'objets {@link User} ayant le rôle "client".
+     */
     @Override
     public ArrayList<User> getAllUserClient() {
         ArrayList<User> listUser ;
@@ -125,6 +147,11 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         return listUser;
     }
 
+    /**
+     * Récupère tous les utilisateurs ayant le rôle "gestionnaire".
+     *
+     * @return Une liste d'objets {@link User} ayant le rôle "gestionnaire".
+     */
     @Override
     public ArrayList<User> getAllUserGestionnaire() {
         ArrayList<User> listUser ;
@@ -157,7 +184,15 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
     }
 
 
-
+    /**
+     * Met à jour les informations d'un utilisateur.
+     *
+     * @param id_user  Identifiant de l'utilisateur à mettre à jour.
+     * @param password Nouveau mot de passe.
+     * @param nom      Nouveau nom.
+     * @param role     Nouveau rôle.
+     * @return {@code true} si la mise à jour a été effectuée, sinon {@code false}.
+     */
     @Override
     public boolean updateUser(int id_user, String password, String nom, String role) {
         String query = "UPDATE User SET password=?, nom=?, role=? WHERE id_user=?";
@@ -177,6 +212,12 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Supprime un utilisateur de la base de données.
+     *
+     * @param user L'utilisateur à supprimer.
+     * @return {@code true} si la suppression a été effectuée, sinon {@code false}.
+     */
     @Override
     public boolean deleteUser(User user) {
         String query = "DELETE FROM User WHERE id_user=?";
@@ -193,6 +234,12 @@ public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Ajoute un utilisateur à la base de données.
+     *
+     * @param user L'utilisateur à ajouter.
+     * @return {@code true} si l'ajout a été effectué, sinon {@code false}.
+     */
     @Override
     public boolean addUser( User user ) {
         String query = "INSERT INTO User (id_user , password, nom, role) VALUES (?, ?, ?, ?)";

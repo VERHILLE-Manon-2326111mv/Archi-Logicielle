@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant d'accèder aux produits stockés dans une base de données Mariadb
+ * Implémente l'interface {@link ProduitRepositoryInterface} et l'interface {@link Closeable}.
  */
 public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Closeable {
 
@@ -20,12 +21,17 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
      *                       (p.ex. jdbc:mariadb://mysql-[compte].alwaysdata.net/[compte]_library_db
      * @param user chaîne de caractères contenant l'identifiant de connexion à la base de données
      * @param pwd chaîne de caractères contenant le mot de passe à utiliser
+     * @throws SQLException             En cas de problème de connexion à la base de données.
+     * @throws ClassNotFoundException   Si le driver JDBC de MariaDB n'est pas trouvé.
      */
     public ProduitRepositoryMariadb(String infoConnection, String user, String pwd ) throws java.sql.SQLException, java.lang.ClassNotFoundException {
         Class.forName("org.mariadb.jdbc.Driver");
         dbConnection = DriverManager.getConnection( infoConnection, user, pwd ) ;
     }
 
+    /**
+     * Ferme la connexion à la base de données.
+     */
     @Override
     public void close() {
         try{
@@ -36,6 +42,11 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
         }
     }
 
+    /**
+     * Récupère un produit à partir de son identifiant.
+     * @param id_produit Identifiant du produit.
+     * @return L'objet {@link Produit} correspondant ou {@code null} si non trouvé.
+     */
     @Override
     public Produit getProduit(int id_produit) {
         Produit selectedProduit = null;
@@ -62,6 +73,10 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
         return selectedProduit;
     }
 
+    /**
+     * Récupère la liste de tous les produits.
+     * @return Une liste d'objets {@link Produit}.
+     */
     @Override
     public ArrayList<Produit> getAllProduit() {
         ArrayList<Produit> listProduit ;
@@ -95,6 +110,15 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
     }
 
 
+    /**
+     * Met à jour les informations d'un produit.
+     * @param id_produit L'identifiant du produit à mettre à jour.
+     * @param nom        Nouveau nom du produit.
+     * @param quantite   Nouvelle quantité disponible du produit.
+     * @param prix       Nouveau prix du produit.
+     * @param unite      Nouvelle unité du produit.
+     * @return {@code true} si la mise à jour a été effectuée, sinon {@code false}.
+     */
     @Override
     public boolean updateProduit(int id_produit, String nom, int quantite, int prix, String unite) {
         String query = "UPDATE Produit SET nom=?, quantite=?, prix=?, unite=? WHERE id_produit=?";
@@ -115,6 +139,11 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Supprime un produit de la base de données.
+     * @param produit Le produit à supprimer.
+     * @return {@code true} si la suppression a été effectuée, sinon {@code false}.
+     */
     @Override
     public boolean deleteProduit(Produit produit) {
         String query = "DELETE FROM Produit WHERE id_produit=?";
@@ -131,6 +160,12 @@ public class ProduitRepositoryMariadb implements ProduitRepositoryInterface, Clo
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Ajoute un produit à la base de données.
+     *
+     * @param produit Le produit à ajouter.
+     * @return {@code true} si l'ajout a été effectué, sinon {@code false}.
+     */
     @Override
     public boolean addProduit( Produit produit ) {
         String query = "INSERT INTO Produit (nom, quantite, prix, unite) VALUES ( ?, ?, ?, ?)";
