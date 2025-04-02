@@ -30,6 +30,9 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         dbConnection = DriverManager.getConnection( infoConnection, user, pwd ) ;
     }
 
+    /**
+     * Fermeture de la connexion à la base de données
+     */
     @Override
     public void close() {
         try{
@@ -40,6 +43,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         }
     }
 
+    /**
+     * Récupère une commande
+     * @param reference
+     * @return
+     */
     @Override
     public Commande getCommande(int reference) {
 
@@ -69,6 +77,10 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return selectedCommande;
     }
 
+    /**
+     * Récupère toutes les commandes
+     * @return
+     */
     @Override
     public ArrayList<Commande> getAllCommande() {
         ArrayList<Commande> listCommande ;
@@ -103,6 +115,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
     }
 
 
+    /**
+     * Récupère toutes les commandes d'un utilisateur
+     * @param commande
+     * @return boolean
+     */
     @Override
     public boolean updateCommande( Commande commande ) {
         String query = "UPDATE Commande SET id_user=?, prix=?, valide=?, date_echeance=?, point_relai=?  where id=?";
@@ -127,6 +144,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Supprime une commande
+     * @param commande
+     * @return
+     */
     @Override
     public boolean deleteCommande( Commande commande ) {
         String query = "DELETE FROM Commande WHERE id=?";
@@ -143,6 +165,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Crée une commande
+     * @param commande
+     * @return
+     */
     @Override
     public boolean createCommande( Commande commande ) {
         String query = "INSERT INTO Commande (id_user, prix,valide, date_echeance, point_relai) VALUES (?, ?, false, null, null)";
@@ -160,6 +187,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Valide une commande
+     * @param commande
+     * @return
+     */
     @Override
     public boolean valideCommande(Commande commande) {
         String query = "UPDATE Commande SET valide=true, date_echeance=?, point_relai=? where id=?";
@@ -179,6 +211,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Récupère toutes les commandes d'un utilisateur
+     * @param commande
+     * @return
+     */
     @Override
     public boolean addPanier(Commande_Panier commande) {
         String query = "INSERT INTO Commande_Panier (id_commande, id_panier, quantite) VALUES (?, ?, ?)";
@@ -197,6 +234,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Récupère toutes les commandes d'un utilisateur
+     * @param commande
+     * @return
+     */
     @Override
     public boolean updatePanier(Commande_Panier commande) {
         String query = "UPDATE Commande_Panier SET quantite=? where id_commande=? and id_panier=?";
@@ -215,6 +257,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Récupère toutes les commandes d'un utilisateur
+     * @param commande
+     * @return
+     */
     @Override
     public boolean deletePanier(Commande_Panier commande) {
         String query = "DELETE FROM Commande_Panier WHERE id_commande=? and id_panier=?";
@@ -232,6 +279,11 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         return ( nbRowModified != 0 );
     }
 
+    /**
+     * Récupère toutes les commandes d'un utilisateur
+     * @param id
+     * @return
+     */
     @Override
     public ArrayList<Commande_Panier> getAllPanierCommande(int id) {
         ArrayList<Commande_Panier> listCommandePanier ;

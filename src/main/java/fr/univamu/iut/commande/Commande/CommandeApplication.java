@@ -9,6 +9,10 @@ import jakarta.ws.rs.core.Application;
 @ApplicationScoped
 public class CommandeApplication extends Application {
 
+    /**
+     * Méthode qui permet de se connecter à la base de données
+     * @return CommandeRepositoryInterface
+     */
     @Produces
     @ApplicationScoped
     public CommandeRepositoryInterface openDbConnection() {

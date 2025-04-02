@@ -6,6 +6,7 @@ import fr.univamu.iut.commande.Produit.Produit;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class Commande {
     protected int id;
 
@@ -21,9 +22,20 @@ public class Commande {
 
     protected ArrayList<Panier> panier = null;
 
+    /**
+     * Constructeur de la classe Commande
+     */
     public Commande() {}
 
 
+    /**
+     * Constructeur de la classe Commande
+     * @param id_user
+     * @param prix
+     * @param valide
+     * @param date_echeance
+     * @param point_relai
+     */
     public Commande(int id_user, int prix, boolean valide, Date date_echeance, String point_relai ) {
         this.id_user = id_user;
         this.prix = prix;
@@ -32,6 +44,11 @@ public class Commande {
         this.point_relai = point_relai;
     }
 
+    /**
+     * Constructeur de la classe Commande
+     * @param id_user
+     * @param prix
+     */
     public Commande(int id_user, int prix) {
         this.id_user = id_user;
         this.prix = prix;
@@ -41,7 +58,15 @@ public class Commande {
     }
 
 
-
+    /**
+     * Constructeur de la classe Commande
+     * @param id
+     * @param id_user
+     * @param prix
+     * @param valide
+     * @param date_echeance
+     * @param point_relai
+     */
     public Commande(int id, int id_user, int prix, boolean valide, Date date_echeance, String point_relai) {
         this.id = id;
         this.id_user = id_user;
@@ -99,10 +124,18 @@ public class Commande {
         this.point_relai = point_relai;
     }
 
+    /**
+     * Getter de la classe Commande
+     * @return
+     */
     public ArrayList<Panier> getPanier() {
         return panier;
     }
 
+    /**
+     * Setter de la classe Commande
+     * @param panier
+     */
     public void setPanier(ArrayList<Panier> panier) {
         this.panier = panier;
     }
