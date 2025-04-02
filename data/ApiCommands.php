@@ -8,7 +8,7 @@ include_once "service/AccessInterface.php";
 use domain\Commandes;
 include_once "domain/Commandes.php";
 
-class ApiCommandes implements AccessInterface
+class ApiCommands implements AccessInterface
 {
     public function addCommande(){
         //TODO: à implémenter
@@ -16,7 +16,7 @@ class ApiCommandes implements AccessInterface
 
     public function curlApiToJSON(string $end)
     {
-        $apiUrl = "http://localhost:8080/commande-1.0-SNAPSHOT/api/produit" . $end;
+        $apiUrl = "http://localhost:6410/commande-1.0-SNAPSHOT/api/produit" . $end;
 
         // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();

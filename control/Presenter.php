@@ -23,7 +23,7 @@ class Presenter
         return $content;
     }
 
-    public function getAllCommandesHTML(){
+    public function getAllCommandsHTML(){
         $content = null;
         if($this->check->getTxt != null){
             $content = '<h1>Liste des Commandes</h1> <ul>';

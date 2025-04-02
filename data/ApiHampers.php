@@ -13,7 +13,7 @@ class ApiHampers implements AccessInterface
     public function curlApiToJSON(string $end)
     {
         // URL de l'API
-        $apiUrl = "http://localhost:8080/api_panier-1.0-SNAPSHOT/api/panier".$end;
+        $apiUrl = "http://localhost:7150/api_panier-1.0-SNAPSHOT/api/panier".$end;
 
         // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();

@@ -55,7 +55,17 @@ class ApiUsers implements AccessInterface
         return $clients;
     }
 
-    public function getUser(int $id){
+    public function getUser($login, $password){
+        $users = $this->getAllUsers();
+        foreach ($users as $user){
+            if($login == $user.getName() && $password == $user.getPassword()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getUserById(int $id){
         $response = $this->curlApiToJSON('/'. $id);
 
         if($response !== null){
@@ -75,7 +85,7 @@ class ApiUsers implements AccessInterface
     public function curlApiToJSON(string $end)
     {
         // URL de l'API
-        $apiUrl = "http://localhost:8080/api_user_produit-1.0-SNAPSHOT/api/user".$end;
+        $apiUrl = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/user/".$end;
 
         // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();

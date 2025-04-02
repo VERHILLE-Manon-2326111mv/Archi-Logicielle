@@ -5,7 +5,7 @@ namespace control;
 class Controllers
 {
 
-    public function  authenticateAction($userCheck){
+    public function  authenticateAction($userCheck, $data){
 
         // Si l'utilisateur n'a pas de session ouverte
         if( !isset($_SESSION['login']) ) {
@@ -13,7 +13,7 @@ class Controllers
             // Si la page d'origine est le formulaire de connexion
             if( isset($_POST['login']) && isset($_POST['password']) )
             {// Vérification de l'authentification si la précédente page était le formulaire de connexion
-                if( !$userCheck->authenticate($_POST['login'], $_POST['password']) )
+                if( !$userCheck->authenticate($_POST['login'], $_POST['password'], $data) )
                 {
                     // retourne une erreur si le compte n'est pas enregistré
                     $error = 'bad login or pwd';
@@ -31,6 +31,15 @@ class Controllers
                 return $error;
             }
 
+        }
+    }
+
+    public function productAction($id, $data, $checking)
+    {
+        if($id === null){
+            $checking->getProduct($id, $data);
+        }else{
+            $checking->getAllProducts($data);
         }
     }
 }

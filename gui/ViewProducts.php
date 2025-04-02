@@ -6,9 +6,9 @@ include_once "View.php";
 
 class ViewProducts extends View
 {
-    public function __construct($layout, $login, $presenter)
+    public function __construct($layout, $presenter)
     {
-        parent::__construct($layout, $login);
+        parent::__construct($layout);
 
         $this->title = 'Liste des produits';
 

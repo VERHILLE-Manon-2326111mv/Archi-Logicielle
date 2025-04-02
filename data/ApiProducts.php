@@ -23,7 +23,7 @@ class ApiProducts implements AccessInterface
             $price = $product['prix'];
             $unite = $product['unite'];
 
-            $currentProduct = new Product();
+            $currentProduct = new Product($id, $name, $quantity, $price, $unite);
             $products[$id] = $currentProduct;
         }
 
@@ -32,6 +32,24 @@ class ApiProducts implements AccessInterface
         file_put_contents('data/cache_alternance', $productSerialized);
 
         return $products;
+    }
+
+    public function getProductById($id){
+        $response = $this->curlApiToJSON($id);
+
+        if($response !== null){
+            $id = $response['id_user'];
+            $name = $response['nom'];
+            $quantity = $response['quantite'];
+            $price = $response['prix'];
+            $unite = $response['unite'];
+
+            $currentProduct = new Product($id, $name, $quantity, $price, $unite);
+
+            return $currentProduct;
+    }else{
+            return null;
+        }
     }
 
     public function curlApiToJSON(string $end)

@@ -20,4 +20,9 @@ class User
     {
         return $this->name;
     }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
 }

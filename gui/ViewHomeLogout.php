@@ -4,9 +4,9 @@ namespace gui;
 
 include_once "View.php";
 
-class ViewHome extends View
+class ViewHomeLogout extends View
 {
-    public function __construct($layout){
+    public function __construct($login, $layout){
         parent::__construct($layout);
 
         $this->title = 'Accueil';
@@ -16,9 +16,10 @@ class ViewHome extends View
         $this->content .= '
             <nav>
                 <ul>
-                    <li><a href="index.php/login">Se connecter</a></li>
+                    <li><a href="/index.php">Se déconnecter</a></li>
                     <li><a href="/index.php/product">Voir les produits</a></li>
                     <li><a href="/index.php/hamper">Voir les paniers</a></li>
+                    <li><a href="/index.php/commande">Passer une commande</a></li>
                 </ul>
             </nav>';
     }
