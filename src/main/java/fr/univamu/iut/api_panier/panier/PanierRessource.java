@@ -8,6 +8,10 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
+/**
+ * Classe PanierRessource
+ * Fournit des endpoints REST pour gérer les opérations sur les paniers et les produits associés.
+ */
 @Path("/panier")
 @ApplicationScoped
 public class PanierRessource {
@@ -15,12 +19,23 @@ public class PanierRessource {
     @Inject
     private PanierService panierService;
 
+    /**
+     * Récupère tous les paniers.
+     *
+     * @return Une chaîne JSON représentant tous les paniers.
+     */
     @GET
     @Produces("application/json")
     public String getAllPaniers() {
         return panierService.getPaniersJSON();
     }
 
+    /**
+     * Récupère un panier par son ID.
+     *
+     * @param id L'ID du panier à récupérer.
+     * @return Une chaîne JSON représentant le panier.
+     */
     @GET
     @Path("/{id}")
     @Produces("application/json")
@@ -32,6 +47,12 @@ public class PanierRessource {
         return result;
     }
 
+    /**
+     * Crée un nouveau panier.
+     *
+     * @param panier Le panier à créer.
+     * @return Une réponse HTTP avec le panier créé.
+     */
     @POST
     @Path("/create")
     @Produces("application/json")
@@ -43,6 +64,13 @@ public class PanierRessource {
         return Response.ok(createdPanier).build();
     }
 
+    /**
+     * Met à jour un panier existant.
+     *
+     * @param id L'ID du panier à mettre à jour.
+     * @param panier Le panier avec les nouvelles informations.
+     * @return Une réponse HTTP indiquant le succès de l'opération.
+     */
     @PUT
     @Path("/update/{id}")
     @Consumes("application/json")
@@ -51,6 +79,12 @@ public class PanierRessource {
         return Response.ok("updated").build();
     }
 
+    /**
+     * Supprime un panier par son ID.
+     *
+     * @param id L'ID du panier à supprimer.
+     * @return Une réponse HTTP indiquant le succès de l'opération.
+     */
     @DELETE
     @Path("/delete/{id}")
     public Response deletePanier(@PathParam("id") int id) {
@@ -58,7 +92,12 @@ public class PanierRessource {
         return Response.ok("deleted").build();
     }
 
-    // Ajouter un produit dans un panier
+    /**
+     * Ajoute un produit dans un panier.
+     *
+     * @param panier_produit L'association panier-produit à ajouter.
+     * @return Une réponse HTTP indiquant le succès de l'opération.
+     */
     @POST
     @Path("/panierProduit/add")
     @Consumes("application/json")
@@ -67,8 +106,12 @@ public class PanierRessource {
         return Response.ok("Produit ajouté au panier").build();
     }
 
-
-    // Modifier la quantité d’un produit dans un panier
+    /**
+     * Met à jour la quantité d'un produit dans un panier.
+     *
+     * @param panier_produit L'association panier-produit à mettre à jour.
+     * @return Une réponse HTTP indiquant le succès de l'opération.
+     */
     @PUT
     @Path("/panierProduit/update")
     @Consumes("application/json")
@@ -77,6 +120,12 @@ public class PanierRessource {
         return Response.ok("Quantité mise à jour").build();
     }
 
+    /**
+     * Supprime un produit d'un panier.
+     *
+     * @param panier_produit L'association panier-produit à supprimer.
+     * @return Une réponse HTTP indiquant le succès de l'opération.
+     */
     @DELETE
     @Path("/panierProduit/delete")
     @Consumes("application/json")
@@ -85,7 +134,12 @@ public class PanierRessource {
         return Response.ok("Produit supprimé du panier").build();
     }
 
-
+    /**
+     * Récupère une association panier-produit par l'ID du produit.
+     *
+     * @param id_produit L'ID du produit.
+     * @return Une réponse HTTP avec l'association panier-produit.
+     */
     @GET
     @Path("/panierProduit/{id_produit}")
     @Produces("application/json")
@@ -97,7 +151,11 @@ public class PanierRessource {
         return Response.ok(panierProduit).build();
     }
 
-    // Récupérer tous les produits des paniers
+    /**
+     * Récupère tous les produits des paniers.
+     *
+     * @return Une réponse HTTP avec la liste de toutes les associations panier-produit.
+     */
     @GET
     @Path("/panierProduit")
     @Produces("application/json")
@@ -106,6 +164,11 @@ public class PanierRessource {
         return Response.ok(produits).build();
     }
 
+    /**
+     * Récupère la réponse d'une API externe.
+     *
+     * @return Une chaîne JSON représentant la réponse de l'API externe.
+     */
     @GET
     @Path("/external")
     @Produces("application/json")

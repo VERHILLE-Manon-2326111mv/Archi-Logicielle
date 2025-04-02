@@ -5,10 +5,20 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.enterprise.inject.Produces;
 import jakarta.ws.rs.core.Application;
 
+/**
+ * Classe PanierApplication
+ * Configure l'application JAX-RS et produit une instance de PanierRepositoryInterface.
+ */
 @ApplicationPath("/api")
 @ApplicationScoped
 public class PanierApplication extends Application {
 
+    /**
+     * Produit une instance de PanierRepositoryInterface.
+     *
+     * @return Une instance de PanierRepositoryMariadb connectée à la base de données.
+     * @throws RuntimeException si une erreur survient lors de la connexion à la base de données.
+     */
     @Produces
     @ApplicationScoped
     public PanierRepositoryInterface openDbConnection() {

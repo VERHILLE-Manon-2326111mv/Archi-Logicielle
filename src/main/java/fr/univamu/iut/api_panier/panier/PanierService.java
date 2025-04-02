@@ -15,17 +15,33 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Classe PanierService
+ * Cette classe permet de gérer les services liés aux paniers
+ */
 @ApplicationScoped
 public class PanierService{
 
     protected PanierRepositoryInterface panierRepo;
 
+    /**
+     * Constructeur de la classe PanierService
+     * @param panierRepo
+     */
     @Inject
     public PanierService(PanierRepositoryInterface panierRepo){this.panierRepo = panierRepo;}
 
+    /**
+     * Constructeur de la classe PanierService
+     */
     public PanierService(){}
 
+    /**
+     * Méthode getPanierJSON
+     * Cette méthode permet de récupérer un panier en JSON
+     * @param id
+     * @return
+     */
     public String getPanierJSON(int id) {
         Panier panier = panierRepo.getPanier(id);
         if (panier == null) {
@@ -65,6 +81,11 @@ public class PanierService{
     }
 
 
+    /**
+     * Méthode getPaniersJSON
+     * Cette méthode permet de récupérer tous les paniers en JSON
+     * @return
+     */
     public String getPaniersJSON(){
         ArrayList<Panier> paniers = (ArrayList<Panier>) panierRepo.getPaniers();
         try (Jsonb jsonb = JsonbBuilder.create()){
@@ -75,25 +96,56 @@ public class PanierService{
         }
     }
 
+    /**
+     * Méthode getIdPanierJSON
+     * Cette méthode permet de récupérer l'id d'un panier en JSON
+     * @param panier
+     * @return
+     */
     public int getIdPanierJSON(Panier panier){
         return panierRepo.getIdPanier(panier);
     }
 
-
+    /**
+     * Méthode getPanier
+     * Cette méthode permet de récupérer un panier
+     * @param panier
+     * @return
+     */
     public void createPanier(Panier panier){
         panierRepo.createPanier(panier);
     }
 
+    /**
+     * Méthode deletePanier
+     * Cette méthode permet de supprimer un panier
+     * @param id
+     */
     public void deletePanier(int id){
         panierRepo.deletePanier(id);
     }
 
+    /**
+     * Méthode updatePanier
+     * Cette méthode permet de mettre à jour un panier
+     * @param id
+     * @param nom
+     * @param datemaj
+     * @param prix
+     * @param quantite
+     */
     public void updatePanier(int id, String nom, java.util.Date datemaj, int prix, int quantite){
         panierRepo.updatePanier(id, nom, datemaj, prix, quantite);
     }
 
     private static final String EXTERNAL_API_URL = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/";
 
+    /**
+     * Méthode callExternalApi
+     * Cette méthode permet d'appeler une API externe
+     * @param apiUrl
+     * @return
+     */
     public String callExternalApi( String apiUrl) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
