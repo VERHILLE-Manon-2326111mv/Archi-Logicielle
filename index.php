@@ -47,18 +47,7 @@ ini_set('session.gc_maxlifetime', 3600);
 session_set_cookie_params(3600);
 session_start();
 
-// Affichage de la page d'accueil lors de l'arrivée sur le site
-if ( '/' != $uri and '/index.php' != $uri){
-
-    $error = $controller->authenticateAction($checking, $apiUser);
-
-    if( $error != null )
-    {
-        $uri='/index.php/error' ;
-        if( $error == 'bad login or pwd' or $error == 'not connected')
-            $redirect = '/index.php/login';
-    }
-}// route la requête en interne
+    // route la requête en interne
 // i.e. lance le bon contrôleur en fonction de la requête effectuée
 if ( '/' == $uri || '/index.php' == $uri) {
     session_destroy();
@@ -78,6 +67,15 @@ if ( '/' == $uri || '/index.php' == $uri) {
         $vueHome->display();
     }
 } else if('/index.php/login' == $uri) {
+    $error = $controller->authenticateAction($checking, $apiUser);
+
+    if( $error != null )
+    {
+        $uri='/index.php/error' ;
+        if( $error == 'bad login or pwd' or $error == 'not connected')
+            $redirect = '/index.php/login';
+    }
+
     // affichage de la page de connexion
     $layout = new Layout("gui/layout.html" );
     $vueLogin = new ViewLogin( $layout );
@@ -85,24 +83,34 @@ if ( '/' == $uri || '/index.php' == $uri) {
     $vueLogin->display();
 } else if('/index.php/product' == $uri) {
     // affichage de la page des produits
-    $controller->productAction(null, $apiProducts, $presenter);
+    $controller->productAction(null, $apiProducts, $checking);
 
     $layout = new Layout("gui/layout.html" );
-    $vueProducts = new ViewProducts( $layout, $apiProducts );
+    $vueProducts = new ViewProducts( $layout, null, $presenter );
 
     $vueProducts->display();
 } else if('/index.php/product' == $uri && isset($_GET['id'])) {
     // affichage de la page des produits
-    $controller->productAction($_GET['id'], $apiProducts, $presenter);
+    $controller->productAction($_GET['id'], $apiProducts, $checking);
 
     $layout = new Layout("gui/layout.html" );
-    $vueProducts = new ViewProducts( $layout, $apiProducts );
+    $vueProducts = new ViewProducts( $layout, $_GET['id'], $presenter );
 
     $vueProducts->display();
 } else if('/index.php/hamper' == $uri) {
     // affichage de la page des paniers
+    $controller->hamperAction(null, $apiHampers, $checking);
+
     $layout = new Layout("gui/layout.html" );
-    $vueHampers = new ViewHampers( $layout, $apiHampers );
+    $vueHampers = new ViewHampers( $layout, null, $presenter );
+
+    $vueHampers->display();
+}else if('/index.php/hamper' == $uri && isset($_GET['id'])) {
+    // affichage de la page des paniers
+    $controller->hamperAction($_GET['id'], $apiHampers, $checking);
+
+    $layout = new Layout("gui/layout.html" );
+    $vueHampers = new ViewHampers( $layout, $_GET['id'], $presenter );
 
     $vueHampers->display();
 } else if('/index.php/command' == $uri) {

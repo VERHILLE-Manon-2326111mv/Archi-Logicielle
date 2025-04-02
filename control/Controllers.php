@@ -42,4 +42,12 @@ class Controllers
             $checking->getAllProducts($data);
         }
     }
+
+    public function hamperAction($id, $data, $checking){
+        if($id === null){
+            $checking->getHamper($id, $data);
+        }else{
+            $checking->getAllHamper($data);
+        }
+    }
 }

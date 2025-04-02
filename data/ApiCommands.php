@@ -2,13 +2,13 @@
 
 namespace data;
 
-use service\AccessInterface;
-include_once "service/AccessInterface.php";
+use service\DataAccessInterface;
+include_once "service/DataAccessInterface.php";
 
 use domain\Commandes;
 include_once "domain/Commandes.php";
 
-class ApiCommands implements AccessInterface
+class ApiCommands implements DataAccessInterface
 {
     public function addCommande(){
         //TODO: à implémenter

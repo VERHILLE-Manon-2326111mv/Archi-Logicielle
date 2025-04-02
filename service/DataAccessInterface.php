@@ -2,7 +2,7 @@
 
 namespace service;
 
-interface AccessInterface
+interface DataAccessInterface
 {
     public function curlApiToJSON(string $end);
 }

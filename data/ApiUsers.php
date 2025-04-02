@@ -2,13 +2,13 @@
 
 namespace data;
 
-use service\AccessInterface;
-include_once "service/AccessInterface.php";
+use service\DataAccessInterface;
+include_once "service/DataAccessInterface.php";
 
 use domain\User;
 include_once "domain/User.php";
 
-class ApiUsers implements AccessInterface
+class ApiUsers implements DataAccessInterface
 {
     public function getAllUsers(){
         $response = $this->curlApiToJSON("");

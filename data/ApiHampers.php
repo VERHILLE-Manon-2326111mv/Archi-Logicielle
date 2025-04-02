@@ -2,14 +2,56 @@
 
 namespace data;
 
-use service\AccessInterface;
-include_once "service/AccessInterface.php";
+use service\DataAccessInterface;
+include_once "service/DataAccessInterface.php";
 
 use domain\Hamper;
 include_once "domain/Hamper.php";
 
-class ApiHampers implements AccessInterface
+class ApiHampers implements DataAccessInterface
 {
+    public function getAllHampers()
+    {
+        $response = $this->curlApiToJSON("");
+
+        $hampers = array();
+        foreach ($response as $hamper){
+
+            $id = $hamper['id'];
+            $name = $hamper['nom'];
+            $maj = $hamper['datemaj'];
+            $price = $hamper['prix'];
+            $quantity = $hamper['quantite'];
+
+            $currentHamper = new Hamper($id, $name, $maj, $price, $quantity);
+            $hampers[$id] = $currentHamper;
+        }
+
+        // enregistrement des produits dans un fichier sur le serveur (serialisation)
+        $hamperSerialized = serialize($hampers);
+        file_put_contents('data/cache_panier', $hamperSerialized);
+
+        return $hampers;
+    }
+
+    public function getHamperById($id){
+        $response = $this->curlApiToJSON($id);
+
+        if($response !== null){
+            $id = $response['id'];
+            $name = $response['nom'];
+            $maj = $response['datemaj'];
+            $price = $response['prix'];
+            $quantity = $response['quantite'];
+
+            $currentHamper = new Hamper($id, $name, $maj, $price, $quantity);
+
+            return $currentHamper;
+        }else{
+            return null;
+        }
+    }
+
     public function curlApiToJSON(string $end)
     {
         // URL de l'API

@@ -2,13 +2,13 @@
 
 namespace data;
 
-use service\AccessInterface;
-include_once "service/AccessInterface.php";
+use service\DataAccessInterface;
+include_once "service/DataAccessInterface.php";
 
 use domain\Product;
 include_once "domain/Product.php";
 
-class ApiProducts implements AccessInterface
+class ApiProducts implements DataAccessInterface
 {
     public function getAllProducts()
     {
@@ -29,7 +29,7 @@ class ApiProducts implements AccessInterface
 
         // enregistrement des produits dans un fichier sur le serveur (serialisation)
         $productSerialized = serialize($products);
-        file_put_contents('data/cache_alternance', $productSerialized);
+        file_put_contents('data/cache_produit', $productSerialized);
 
         return $products;
     }
