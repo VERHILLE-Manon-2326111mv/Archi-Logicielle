@@ -2,60 +2,61 @@
 
 namespace domain;
 
-class Product
-{
-    protected $id_product;
-    protected $name;
-    protected $quantity;
-    protected $price;
+class Product {
+    protected $id_produit;
+    protected $nom;
+    protected $quantite;
+    protected $prix;
     protected $unite;
 
-    public function __construct($id_product, $name, $quantity, $price, $unite)
-    {
-        $this->id_product = $id_product;
-        $this->name = $name;
-        $this->quantity = $quantity;
-        $this->price = $price;
-        $this->unite = $unite;
+    public function __construct($id_produit = null, $nom = null, $quantite = null, $prix = null, $unite = null) {
+        if ($id_produit !== null) {
+            $this->id_produit = $id_produit;
+            $this->nom = $nom;
+            $this->quantite = $quantite;
+            $this->prix = $prix;
+            $this->unite = $unite;
+        }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdProduct()
-    {
-        return $this->id_product;
+    public function getId_produit() {
+        return $this->id_produit;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
+    public function setId_produit($id_produit) {
+        $this->id_produit = $id_produit;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPrice()
-    {
-        return $this->price;
+    public function getNom() {
+        return $this->nom;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
+    public function setNom($nom) {
+        $this->nom = $nom;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUnite()
-    {
+    public function getQuantite() {
+        return $this->quantite;
+    }
+
+    public function setQuantite($quantite) {
+        $this->quantite = $quantite;
+    }
+
+    public function getPrix() {
+        return $this->prix;
+    }
+
+    public function setPrix($prix) {
+        $this->prix = $prix;
+    }
+
+    public function getUnite() {
         return $this->unite;
     }
+
+    public function setUnite($unite) {
+        $this->unite = $unite;
+    }
 }
+?>

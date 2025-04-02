@@ -47,7 +47,7 @@ ini_set('session.gc_maxlifetime', 3600);
 session_set_cookie_params(3600);
 session_start();
 
-    // route la requête en interne
+// route la requête en interne
 // i.e. lance le bon contrôleur en fonction de la requête effectuée
 if ( '/' == $uri || '/index.php' == $uri) {
     session_destroy();
@@ -57,9 +57,9 @@ if ( '/' == $uri || '/index.php' == $uri) {
 
     $vueHome->display();
 
-}else if ('/index.php/logout' == $uri) {
+} else if ('/index.php/logout' == $uri) {
     // Si l'utilisateur est connecté
-    if($_SESSION['login']){
+    if(isset($_SESSION['login'])){
         // affichage de la page d'accueil pour utilisateur connecté
         $layout = new Layout("gui/layout.html" );
         $vueHome = new ViewHomeLogout($_SESSION['login'], $layout );
@@ -81,49 +81,63 @@ if ( '/' == $uri || '/index.php' == $uri) {
     $vueLogin = new ViewLogin( $layout );
 
     $vueLogin->display();
-} else if('/index.php/product' == $uri) {
-    // affichage de la page des produits
+} else if('/index.php/produit' == $uri) {
     $controller->productAction(null, $apiProducts, $checking);
 
     $layout = new Layout("gui/layout.html" );
-    $vueProducts = new ViewProducts( $layout, null, $presenter );
+    $vueProducts = new ViewProducts( $layout, null, $presenter, $apiProducts );
 
     $vueProducts->display();
-} else if('/index.php/product' == $uri && isset($_GET['id'])) {
-    // affichage de la page des produits
-    $controller->productAction($_GET['id'], $apiProducts, $checking);
+} else if (preg_match('#^/index.php/produit/([0-9]+)$#', $uri, $matches)) {
+    $productId = $matches[1];
 
-    $layout = new Layout("gui/layout.html" );
-    $vueProducts = new ViewProducts( $layout, $_GET['id'], $presenter );
+    $controller->productAction($productId, $apiProducts, $checking);
+
+    $layout = new Layout("gui/layout.html");
+    $vueProducts = new ViewProducts($layout, $productId, $presenter, $apiProducts);
 
     $vueProducts->display();
-} else if('/index.php/hamper' == $uri) {
-    // affichage de la page des paniers
+}
+
+else if('/index.php/panier' == $uri) {
     $controller->hamperAction(null, $apiHampers, $checking);
 
     $layout = new Layout("gui/layout.html" );
-    $vueHampers = new ViewHampers( $layout, null, $presenter );
+    $vueHampers = new ViewHampers( $layout, null, $presenter,$apiHampers );
 
     $vueHampers->display();
-}else if('/index.php/hamper' == $uri && isset($_GET['id'])) {
-    // affichage de la page des paniers
-    $controller->hamperAction($_GET['id'], $apiHampers, $checking);
+} else if (preg_match('#^/index.php/panier/([0-9]+)$#', $uri, $matches)) {
+    $panierID = $matches[1];
+
+    $controller->hamperAction($panierID, $apiHampers, $checking);
 
     $layout = new Layout("gui/layout.html" );
-    $vueHampers = new ViewHampers( $layout, $_GET['id'], $presenter );
+    $vueHampers = new ViewHampers( $layout, $panierID, $presenter, $apiHampers );
 
     $vueHampers->display();
-} else if('/index.php/command' == $uri) {
-    // Si l'utilisateur est connecté
-    if($_SESSION['login']){
-        // affichage de la page des commandes
+} else if('/index.php/commande' == $uri) {
+    $controller->commandeAction(null, $apiCommandes, $checking);
+
         $layout = new Layout("gui/layout.html" );
-        $vueCommands = new ViewCommands( $layout, $apiCommandes );
+        $vueCommands = new ViewCommands( $layout, null ,$presenter ,$apiCommandes );
 
         $vueCommands->display();
-    }
-}
-else {
+
+} else if (preg_match('#^/index.php/commande/([0-9]+)$#', $uri, $matches)) {
+    $commandId = $matches[1];
+
+    $controller->commandeAction($commandId, $apiCommandes, $checking);
+
+    $layout = new Layout("gui/layout.html" );
+    $vueCommands = new ViewCommands( $layout, $commandId, $presenter, $apiCommandes );
+
+    $vueCommands->display();
+} else if('/index.php/error' == $uri) {
+    // affichage de la page d'erreur
     header('Status: 404 Not Found');
-    echo '<html><body><h1>My Page NotFound</h1></body></html>';
+    echo '<html><body><h1>My Page NotFound test</h1></body></html>';
+
+} else {
+    header('Status: 404 Not Found');
+    echo '<html><body><h1>My Page NotFound test</h1></body></html>';
 }

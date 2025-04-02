@@ -10,15 +10,62 @@ include_once "domain/Commandes.php";
 
 class ApiCommands implements DataAccessInterface
 {
-    public function addCommande(){
-        //TODO: à implémenter
+    public function getAllCommandes(){
+        $response = $this->curlApiToJSON("");
+        if ($response == null) {
+            return null;
+        }
+        $commandes = [];
+        foreach ($response as $commande) {
+            $id = $commande['id'];
+            $id_user = $commande['id_user'];
+            $prix = $commande['prix'];
+            $valide = $commande['valide'];
+            $currentCommande = new Commandes(
+                $id,
+                $id_user,
+                $prix,
+                $valide,
+            );
+            $commandes[] = $currentCommande;
+        }
+
+        $commandesSerialized = serialize($commandes);
+        file_put_contents('data/cache_commandes', $commandesSerialized);
+        return $commandes;
     }
+
+    public function getCommandeById($id){
+        $response = $this->curlApiToJSON($id);
+        if($response !== null){
+            $id = $response['id'];
+            $id_user = $response['id_user'];
+            $prix = $response['prix'];
+            $valide = $response['valide'];
+            $panier = $response['panier'];
+            $currentCommande = new Commandes(
+                $id,
+                $id_user,
+                $prix,
+                $valide,
+                $panier
+            );
+            return $currentCommande;
+        }else{
+            return null;
+        }
+    }
+
 
     public function curlApiToJSON(string $end)
     {
-        $apiUrl = "http://localhost:6410/commande-1.0-SNAPSHOT/api/produit" . $end;
+        if($end === ""){
+            $apiUrl = "http://localhost:6140/commande-1.0-SNAPSHOT/api/commande";
+        }
+        else{
+            $apiUrl = "http://localhost:6140/commande-1.0-SNAPSHOT/api/commande/". $end;
+        }
 
-        // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();
 
         // définition des paramètres de la requête CURL

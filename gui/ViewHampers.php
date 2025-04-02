@@ -6,18 +6,18 @@ include_once "View.php";
 
 class ViewHampers extends View
 {
-    public function __construct($layout, $id, $presenter)
+    public function __construct($layout, $id, $presenter,$data)
     {
         parent::__construct($layout);
 
         $this->title = 'Liste des paniers';
 
         if($id != null) {
-            $this->content = $presenter->getCuurentHamperHTML($id);
+            $this->content = $presenter->getCurrentHampersHTML($id,$data);
         } else {
-            $this->content = $presenter->getAllHampersHTML();
+            $this->content = $presenter->getAllHampersHTML($data);
         }
 
-        $this->content .= '<a href="/index.php/home">Retour</a>';
+        $this->content .= '<a href="/">Retour</a>';
     }
 }

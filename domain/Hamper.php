@@ -10,14 +10,18 @@ class Hamper
     protected $price;
     protected $quantity;
 
-    public function __construct($id_product, $name, $maj, $price, $quantity)
+    protected $products = [];
+
+    public function __construct($id_product, $name, $maj, $price, $quantity, $products = [])
     {
         $this->id_product = $id_product;
         $this->name = $name;
         $this->maj = $maj;
         $this->price = $price;
         $this->quantity = $quantity;
+        $this->products = $products;
     }
+
 
     /**
      * @return mixed
@@ -57,5 +61,21 @@ class Hamper
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param array $products
+     */
+    public function setProducts(array $products)
+    {
+        $this->products = $products;
     }
 }

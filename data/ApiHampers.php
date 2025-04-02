@@ -6,6 +6,8 @@ use service\DataAccessInterface;
 include_once "service/DataAccessInterface.php";
 
 use domain\Hamper;
+use function Sodium\add;
+
 include_once "domain/Hamper.php";
 
 class ApiHampers implements DataAccessInterface
@@ -14,7 +16,7 @@ class ApiHampers implements DataAccessInterface
     {
         $response = $this->curlApiToJSON("");
 
-        $hampers = array();
+        $hampers = [];
         foreach ($response as $hamper){
 
             $id = $hamper['id'];
@@ -24,10 +26,9 @@ class ApiHampers implements DataAccessInterface
             $quantity = $hamper['quantite'];
 
             $currentHamper = new Hamper($id, $name, $maj, $price, $quantity);
-            $hampers[$id] = $currentHamper;
+            $hampers[] = $currentHamper;
         }
 
-        // enregistrement des produits dans un fichier sur le serveur (serialisation)
         $hamperSerialized = serialize($hampers);
         file_put_contents('data/cache_panier', $hamperSerialized);
 
@@ -43,8 +44,9 @@ class ApiHampers implements DataAccessInterface
             $maj = $response['datemaj'];
             $price = $response['prix'];
             $quantity = $response['quantite'];
+            $products = $response['produits'];
 
-            $currentHamper = new Hamper($id, $name, $maj, $price, $quantity);
+            $currentHamper = new Hamper($id, $name, $maj, $price, $quantity, $products);
 
             return $currentHamper;
         }else{
@@ -54,9 +56,12 @@ class ApiHampers implements DataAccessInterface
 
     public function curlApiToJSON(string $end)
     {
-        // URL de l'API
-        $apiUrl = "http://localhost:7150/api_panier-1.0-SNAPSHOT/api/panier".$end;
-
+        if($end === ""){
+            $apiUrl = "http://localhost:7150/API_Panier-1.0-SNAPSHOT/api/panier";
+        }
+        else{
+            $apiUrl = "http://localhost:7150/API_Panier-1.0-SNAPSHOT/api/panier/". $end;
+        }
         // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();
 
@@ -77,6 +82,7 @@ class ApiHampers implements DataAccessInterface
 
         // transformation du JSON récupéré en tableau associatif
         $response = json_decode( $response, true );
+
 
         return $response;
     }

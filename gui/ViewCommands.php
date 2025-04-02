@@ -6,14 +6,18 @@ include_once "View.php";
 
 class ViewCommands extends View
 {
-    public function __construct($layout, $login, $presenter)
+    public function __construct($layout, $id, $presenter,$data)
     {
-        parent::__construct($layout, $login);
+        parent::__construct($layout);
 
-        $this->title = 'Passer une commande';
+        $this->title = 'Voir les commandes';
 
-        $this->content = $presenter->getAllHampersHTML();
+        if($id != null) {
+            $this->content = $presenter->getCurrentCommandesHTML($id,$data);
+        } else {
+            $this->content = $presenter->getAllCommandes($data);
+        }
 
-        $this->content .= '<a href="/index.php/home">Retour</a>';
+        $this->content .= '<a href="/">Retour</a>';
     }
 }

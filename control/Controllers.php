@@ -36,18 +36,27 @@ class Controllers
 
     public function productAction($id, $data, $checking)
     {
-        if($id === null){
+        if($id !== null){
             $checking->getProduct($id, $data);
-        }else{
+        }
+        else{
             $checking->getAllProducts($data);
         }
     }
 
     public function hamperAction($id, $data, $checking){
-        if($id === null){
+        if($id ==! null){
             $checking->getHamper($id, $data);
         }else{
-            $checking->getAllHamper($data);
+            $checking->getAllHampers($data);
+        }
+    }
+
+    public function commandeAction($id, $data, $checking){
+        if($id ==! null){
+            $checking->getCommande($id, $data);
+        }else{
+            $checking->getAllCommandes($data);
         }
     }
 }

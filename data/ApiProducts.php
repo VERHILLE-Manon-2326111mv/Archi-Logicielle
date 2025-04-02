@@ -19,7 +19,7 @@ class ApiProducts implements DataAccessInterface
 
             $id = $product['id_produit'];
             $name = $product['nom'];
-            $quantity = $product['quantity'];
+            $quantity = $product['quantite']; // Corrigé de 'quantity' à 'quantite'
             $price = $product['prix'];
             $unite = $product['unite'];
 
@@ -38,7 +38,7 @@ class ApiProducts implements DataAccessInterface
         $response = $this->curlApiToJSON($id);
 
         if($response !== null){
-            $id = $response['id_user'];
+            $id = $response['id_produit']; // Corrigé de 'id_user' à 'id_produit'
             $name = $response['nom'];
             $quantity = $response['quantite'];
             $price = $response['prix'];
@@ -47,14 +47,19 @@ class ApiProducts implements DataAccessInterface
             $currentProduct = new Product($id, $name, $quantity, $price, $unite);
 
             return $currentProduct;
-    }else{
+        }else{
             return null;
         }
     }
 
     public function curlApiToJSON(string $end)
     {
-        $apiUrl = "http://localhost:8080/api_user_produit-1.0-SNAPSHOT/api/produit" . $end;
+        if($end === ""){
+            $apiUrl = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit";
+        }
+        else{
+            $apiUrl = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/" . $end; // Ajout d'un "/" entre produit et $end
+        }
 
         // initialisation de la connexion à l'API avec CURL
         $curlConnection  = curl_init();

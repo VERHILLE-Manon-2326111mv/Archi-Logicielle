@@ -16,9 +16,10 @@ class ViewHome extends View
         $this->content .= '
             <nav>
                 <ul>
-                    <li><a href="/index.php/login">Se connecter</a></li>
-                    <li><a href="/index.php/product">Voir les produits</a></li>
-                    <li><a href="/index.php/hamper">Voir les paniers</a></li>
+                    <li><a href="/index.php">Acceuil</a></li>
+                     <li><a href="/index.php/produit">Produit</a></li>
+                    <li><a href="/index.php/panier">Panier</a></li>
+                    <li><a href="/index.php/commande">Commande</a></li>
                 </ul>
             </nav>';
     }
