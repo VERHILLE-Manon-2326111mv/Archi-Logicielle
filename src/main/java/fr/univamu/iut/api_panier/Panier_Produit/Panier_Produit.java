@@ -1,6 +1,6 @@
 package fr.univamu.iut.api_panier.Panier_Produit;
 
-public class Panier_Produit
+public class Panier_Produit implements java.io.Serializable
 {
 
     private int id_panier;

@@ -67,22 +67,24 @@ public class PanierRessource {
         return Response.ok("Produit ajouté au panier").build();
     }
 
+
     // Modifier la quantité d’un produit dans un panier
     @PUT
-    @Path("/panierProduit/update/{id}")
+    @Path("/panierProduit/update")
     @Consumes("application/json")
-    public Response updateProduitPanier(@PathParam("id") Panier_Produit panier_produit) {
+    public Response updateProduitPanier(Panier_Produit panier_produit) {
         panierService.panierRepo.updateProduitPanier(panier_produit);
         return Response.ok("Quantité mise à jour").build();
     }
 
     @DELETE
-    @Path("/panierProduit/delete/{id}")
+    @Path("/panierProduit/delete")
     @Consumes("application/json")
-    public Response deleteProduitPanier(@PathParam("id") Panier_Produit panier_produit) {
+    public Response deleteProduitPanier(Panier_Produit panier_produit) {
         panierService.panierRepo.deleteProduitPanier(panier_produit);
         return Response.ok("Produit supprimé du panier").build();
     }
+
 
     @GET
     @Path("/panierProduit/{id_produit}")
