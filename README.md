@@ -56,16 +56,6 @@ Exemple de payload JSON :
 }
 ```
 
-## Dépendances et Installation
-L'API est développée en Java et nécessite les dépendances suivantes :
-- Java 11+
-- Framework Spring Boot
-- Base de données relationnelle (PostgreSQL, MySQL...)
-
-### Installation
-1. Cloner le repository
-2. Configurer la base de données dans `application.properties`
-3. Compiler et exécuter le projet
 
 ## Auteur
 **BOISDANGHIEN Evan**
