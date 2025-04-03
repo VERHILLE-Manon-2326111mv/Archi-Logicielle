@@ -4,6 +4,7 @@ import fr.univamu.iut.commande.Commande_Panier.Commande_Panier;
 
 import java.io.Closeable;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -130,7 +131,8 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
             ps.setInt(2, commande.getPrix());
             ps.setBoolean(3, commande.isValide());
             java.util.Date utilDate = commande.getDate_echeance();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            java.sql.Date sqlDate = (utilDate != null) ? new java.sql.Date(utilDate.getTime()) : null;
+            ps.setDate(4, sqlDate);
             ps.setDate(4, (java.sql.Date) sqlDate);
             ps.setString(5, commande.getPoint_relai());
             ps.setInt(6, commande.getId());
@@ -197,19 +199,32 @@ public class CommandeRepositoryMariadb   implements CommandeRepositoryInterface,
         String query = "UPDATE Commande SET valide=true, date_echeance=?, point_relai=? where id=?";
         int nbRowModified = 0;
 
-        try ( PreparedStatement ps = dbConnection.prepareStatement(query) ){
+        try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
             ps.setInt(3, commande.getId());
+
             java.util.Date utilDate = commande.getDate_echeance();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            ps.setDate(1, sqlDate);
+            if (utilDate != null) {
+                // Format personnalisé pour la date
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = sdf.format(utilDate);
+                // Conversion en java.sql.Date
+                java.sql.Date sqlDate = java.sql.Date.valueOf(formattedDate);
+                ps.setDate(1, sqlDate);
+            } else {
+                // Si la date est nulle, on insère NULL dans la base de données
+                ps.setNull(1, java.sql.Types.DATE);
+            }
+
             ps.setString(2, commande.getPoint_relai());
 
             nbRowModified = ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ( nbRowModified != 0 );
+
+        return (nbRowModified != 0);
     }
+
 
     /**
      * Récupère toutes les commandes d'un utilisateur

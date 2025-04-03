@@ -16,9 +16,9 @@ public class Commande {
 
     protected boolean valide;
 
-    protected Date date_echeance;
+    protected Date date_echeance = null;
 
-    protected String point_relai;
+    protected String point_relai = null;
 
     protected ArrayList<Panier> panier = null;
 

@@ -92,7 +92,7 @@ public class CommandeRessource {
         return Response.ok("updated").build();
     }
 
-    @PUT
+    @POST
     @Path("/deleteCommandePanier")
     @Consumes("application/json")
     public Response deletePanier(Commande_Panier commande) {
