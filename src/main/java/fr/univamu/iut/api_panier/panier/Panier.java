@@ -26,7 +26,8 @@ public class Panier {
      * @param prix Le prix du panier.
      * @param quantite La quantité de produits dans le panier.
      */
-    public Panier(String nom, Date datemaj, int prix, int quantite) {
+    public Panier(int id, String nom, Date datemaj, int prix, int quantite) {
+        this.id = id;
         this.nom = nom;
         this.datemaj = datemaj;
         this.prix = prix;

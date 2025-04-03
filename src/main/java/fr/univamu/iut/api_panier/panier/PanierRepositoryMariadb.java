@@ -81,11 +81,12 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
             stmt.setInt(1, id);
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
+                int id_panier = result.getInt("id");
                 String nom = result.getString("nom");
                 Date datemaj = result.getDate("datemaj");
                 int prix = result.getInt("prix");
                 int quantite = result.getInt("quantite");
-                panier = new Panier(nom, datemaj, prix, quantite);
+                panier = new Panier(id_panier, nom, datemaj, prix, quantite);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -105,11 +106,12 @@ public class PanierRepositoryMariadb implements PanierRepositoryInterface, Close
         try (PreparedStatement stmt = dbConnection.prepareStatement(query)) {
             ResultSet result = stmt.executeQuery();
             while (result.next()) {
+                int id = result.getInt("id");
                 String nom = result.getString("nom");
                 Date datemaj = result.getDate("datemaj");
                 int prix = result.getInt("prix");
                 int quantite = result.getInt("quantite");
-                Panier panier = new Panier(nom, datemaj, prix, quantite);
+                Panier panier = new Panier(id, nom, datemaj, prix, quantite);
                 paniers.add(panier);
             }
         } catch (SQLException e) {
