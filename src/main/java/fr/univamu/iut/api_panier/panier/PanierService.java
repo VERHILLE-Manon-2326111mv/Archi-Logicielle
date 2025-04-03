@@ -112,8 +112,8 @@ public class PanierService{
      * @param panier
      * @return
      */
-    public void createPanier(Panier panier){
-        panierRepo.createPanier(panier);
+    public Panier createPanier(Panier panier){
+        return panierRepo.createPanier(panier);
     }
 
     /**
@@ -137,6 +137,45 @@ public class PanierService{
     public void updatePanier(int id, String nom, java.util.Date datemaj, int prix, int quantite){
         panierRepo.updatePanier(id, nom, datemaj, prix, quantite);
     }
+
+    /**
+     * Méthode getPanier
+     * Cette méthode permet de supprimer un panier produit
+     * @param panierProduit
+     */
+    public void deleteProduitPanier(Panier_Produit panierProduit) {
+        panierRepo.deleteProduitPanier(panierProduit);
+    }
+
+    /**
+     * Méthode getPanierProduit
+     * Cette méthode permet de récupérer les produits d'un panier
+     * @return
+     */
+    public List<Panier_Produit> getPaniersProduit() {
+        return panierRepo.getPaniersProduit();
+    }
+
+    /**
+     * Méthode getPanierProduit
+     * Cette méthode permet de récupérer les produits d'un panier
+     * @param id
+     * @return
+     */
+    public Panier_Produit getPaniersProduit(int id) {
+        return panierRepo.getPaniersProduit(id);
+    }
+
+    /**
+     * Méthode addProduitPanier
+     * Cette méthode permet d'ajouter un produit à un panier
+     * @param panierProduit
+     */
+    public void addProduitPanier(Panier_Produit panierProduit) {
+        panierRepo.addProduitPanier(panierProduit);
+    }
+
+
 
     private static final String EXTERNAL_API_URL = "http://localhost:8080/Api_User_Produit-1.0-SNAPSHOT/api/produit/";
 

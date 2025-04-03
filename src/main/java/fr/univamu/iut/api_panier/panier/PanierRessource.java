@@ -57,7 +57,7 @@ public class PanierRessource {
     @Path("/create")
     @Produces("application/json")
     public Response createPanier(Panier panier) {
-        Panier createdPanier = panierService.panierRepo.createPanier(panier);
+        Panier createdPanier = panierService.createPanier(panier);
         if (createdPanier == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -75,7 +75,7 @@ public class PanierRessource {
     @Path("/update/{id}")
     @Consumes("application/json")
     public Response updatePanier(@PathParam("id") int id, Panier panier) {
-        panierService.panierRepo.updatePanier(id, panier.getNom(), panier.getDatemaj(), panier.getPrix(), panier.getQuantite());
+        panierService.updatePanier(id, panier.getNom(), panier.getDatemaj(), panier.getPrix(), panier.getQuantite());
         return Response.ok("updated").build();
     }
 
@@ -88,7 +88,7 @@ public class PanierRessource {
     @DELETE
     @Path("/delete/{id}")
     public Response deletePanier(@PathParam("id") int id) {
-        panierService.panierRepo.deletePanier(id);
+        panierService.deletePanier(id);
         return Response.ok("deleted").build();
     }
 
@@ -102,7 +102,7 @@ public class PanierRessource {
     @Path("/panierProduit/add")
     @Consumes("application/json")
     public Response addProduitPanier(Panier_Produit panier_produit) {
-        panierService.panierRepo.addProduitPanier(panier_produit);
+        panierService.addProduitPanier(panier_produit);
         return Response.ok("Produit ajouté au panier").build();
     }
 
@@ -130,7 +130,7 @@ public class PanierRessource {
     @Path("/panierProduit/delete")
     @Consumes("application/json")
     public Response deleteProduitPanier(Panier_Produit panier_produit) {
-        panierService.panierRepo.deleteProduitPanier(panier_produit);
+        panierService.deleteProduitPanier(panier_produit);
         return Response.ok("Produit supprimé du panier").build();
     }
 
@@ -144,7 +144,7 @@ public class PanierRessource {
     @Path("/panierProduit/{id_produit}")
     @Produces("application/json")
     public Response getProduitPanier(@PathParam("id_produit") int id_produit) {
-        Panier_Produit panierProduit = panierService.panierRepo.getPaniersProduit(id_produit);
+        Panier_Produit panierProduit = panierService.getPaniersProduit(id_produit);
         if (panierProduit == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -160,7 +160,7 @@ public class PanierRessource {
     @Path("/panierProduit")
     @Produces("application/json")
     public Response getAllProduitsPanier() {
-        List<Panier_Produit> produits = panierService.panierRepo.getPaniersProduit();
+        List<Panier_Produit> produits = panierService.getPaniersProduit();
         return Response.ok(produits).build();
     }
 
