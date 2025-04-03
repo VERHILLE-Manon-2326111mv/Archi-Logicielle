@@ -53,7 +53,7 @@ public class CommandeRessource {
     }
 
     @POST
-    @Path("/create}")
+    @Path("/create")
     @Consumes("application/json")
     public Response createCommande(Commande commande) {
         if (!service.createCommande(commande)) {
