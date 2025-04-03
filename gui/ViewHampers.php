@@ -4,6 +4,11 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * @ViewHampers
+ *
+ * Classe d'affichage des paniers.
+ */
 class ViewHampers extends View
 {
     public function __construct($layout, $id, $presenter,$data)

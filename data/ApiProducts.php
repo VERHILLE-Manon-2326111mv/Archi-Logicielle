@@ -8,8 +8,18 @@ include_once "service/DataAccessInterface.php";
 use domain\Product;
 include_once "domain/Product.php";
 
+/**
+ * @ApiProducts
+ *
+ * Implémentation de l'API Produit
+ */
 class ApiProducts implements DataAccessInterface
 {
+    /**
+     * @return array
+     *
+     * Permet de récupérer tous les produits.
+     */
     public function getAllProducts()
     {
         $response = $this->curlApiToJSON("");
@@ -34,6 +44,12 @@ class ApiProducts implements DataAccessInterface
         return $products;
     }
 
+    /**
+     * @param $id
+     * @return Product|null
+     *
+     * Permet de récupérer un produit par son ID.
+     */
     public function getProductById($id){
         $response = $this->curlApiToJSON($id);
 
@@ -52,6 +68,12 @@ class ApiProducts implements DataAccessInterface
         }
     }
 
+    /**
+     * @param string $end
+     * @return mixed
+     *
+     * Permet de récupérer l'API.
+     */
     public function curlApiToJSON(string $end)
     {
         if($end === ""){

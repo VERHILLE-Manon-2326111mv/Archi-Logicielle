@@ -1,5 +1,11 @@
 <?php
 namespace control;
+
+/**
+ * @Presenter
+ *
+ * Cette classe gère la présentation des produits, paniers et commandes en HTML.
+ */
 class Presenter
 {
     protected $check;
@@ -9,6 +15,12 @@ class Presenter
         $this->check = $check;
     }
 
+    /**
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher l'ensemble des produits.
+     */
     public function getAllProductsHTML($data){
         $content = null;
         if($this->check->getTxt()!= null){
@@ -24,6 +36,13 @@ class Presenter
         return $content;
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher un produit et ses détails selon un ID.
+     */
     public function getCurentProductHTML($id, $data)
     {
         $content = null;
@@ -38,21 +57,12 @@ class Presenter
         return $content;
     }
 
-
-    public function getAllCommandsHTML(){
-        $content = null;
-        if($this->check->getTxt != null){
-            $content = '<h1>Liste des Commandes</h1> <ul>';
-            foreach($this->check->getTxt() as $command){
-                $content .= '<li>';
-                $content .= '<a href="/index.php/command?id=' . $command['id'] . '">' . $command['title'] . '</a>';
-                $content .= '</li>';
-            }
-            $content .= '</ul>';
-        }
-        return $content;
-    }
-
+    /**
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher l'ensemble des paniers.
+     */
     public function getAllHampersHTML($data){
         $content = null;
         if($this->check->getTxt() != null){
@@ -68,6 +78,13 @@ class Presenter
         return $content;
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher un panier et ses détails selon un ID.
+     */
     public function getCurrentHampersHTML($id, $data)
     {
         $content = null;
@@ -98,12 +115,18 @@ class Presenter
         return $content;
     }
 
-    public function getAllCommandes($data)
+    /**
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher l'ensemble des commandes.
+     */
+    public function getAllCommandsHTML($data)
     {
         $content = null;
         if($this->check->getTxt() != null){
             $content = '<h1>Liste des Commandes</h1> <ul>';
-            $commandes = $this->check->getAllCommandes($data);
+            $commandes = $this->check->getAllCommandsHTML($data);
             foreach($commandes as $commande){
                 $content .= '<li>';
                 $content .= '<a href="/index.php/commande/' . $commande['id'] . '">' . "Commande " . $commande['id']  . '</a>';
@@ -114,7 +137,14 @@ class Presenter
         return $content;
     }
 
-    public function getCurrentCommandesHTML($id, $data)
+    /**
+     * @param $id
+     * @param $data
+     * @return string|null
+     * 
+     * Permet d'afficher une commande et ses détails selon un ID.
+     */
+    public function getCurrentCommandHTML($id, $data)
     {
         $content = null;
         if ($this->check->getTxt() != null) {

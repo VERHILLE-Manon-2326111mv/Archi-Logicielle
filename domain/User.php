@@ -1,6 +1,12 @@
 <?php
 
 namespace domain;
+
+/**
+ * @Commandes
+ *
+ * Classe représentant un utilisateur.
+ */
 class User
 {
     protected $id_user;

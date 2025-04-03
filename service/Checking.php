@@ -2,20 +2,45 @@
 
 namespace service;
 
+/**
+ * @Checking
+ *
+ * Gère la vérification des données et la transformation des objets en tableaux.
+ */
 class Checking
 {
+
     protected $txt;
 
+    /**
+     * Récupère les données stockées.
+     *
+     * @return array
+     */
     public function getTxt()
     {
         return $this->txt;
     }
 
+    /**
+     * Authentifie un utilisateur.
+     *
+     * @param string $login Login de l'utilisateur
+     * @param string $password Mot de passe de l'utilisateur
+     * @param mixed $data Source de données pour la vérification
+     * @return bool True si l'authentification réussit, false sinon
+     */
     public function authenticate($login, $password, $data)
     {
         return ($data->getUser($login, $password) != null);
     }
 
+    /**
+     * Récupère tous les produits et les transforme en tableau.
+     *
+     * @param mixed $data Source de données contenant les produits
+     * @return array Liste des produits formatée
+     */
     public function getAllProducts($data)
     {
         $products = $data->getAllProducts();
@@ -34,7 +59,15 @@ class Checking
         return $this->txt;
     }
 
-    public function getProduct($id, $data){
+    /**
+     * Récupère un produit spécifique par son ID.
+     *
+     * @param int $id Identifiant du produit
+     * @param mixed $data Source de données contenant les produits
+     * @return array Informations du produit formatées
+     */
+    public function getProduct($id, $data)
+    {
         $product = $data->getProductById($id);
 
         $this->txt[] = [
@@ -48,6 +81,12 @@ class Checking
         return $this->txt;
     }
 
+    /**
+     * Récupère tous les paniers et les transforme en tableau.
+     *
+     * @param mixed $data Source de données contenant les paniers
+     * @return array Liste des paniers formatée
+     */
     public function getAllHampers($data)
     {
         $hampers = $data->getAllHampers();
@@ -66,6 +105,13 @@ class Checking
         return $this->txt;
     }
 
+    /**
+     * Récupère un panier spécifique par son ID.
+     *
+     * @param int $id Identifiant du panier
+     * @param mixed $data Source de données contenant les paniers
+     * @return array Informations du panier formatées
+     */
     public function getHamper($id, $data)
     {
         $hamper = $data->getHamperById($id);
@@ -84,9 +130,15 @@ class Checking
         return $this->txt;
     }
 
-    public function getAllCommandes($data)
+    /**
+     * Récupère toutes les commandes et les transforme en tableau.
+     *
+     * @param mixed $data Source de données contenant les commandes
+     * @return array Liste des commandes formatée
+     */
+    public function getAllCommandsHTML($data)
     {
-        $commandes = $data->getAllCommandes();
+        $commandes = $data->getAllCommandsHTML();
         $this->txt = [];
         foreach ($commandes as $commande) {
             $this->txt[] = [
@@ -102,6 +154,13 @@ class Checking
         return $this->txt;
     }
 
+    /**
+     * Récupère une commande spécifique par son ID.
+     *
+     * @param int $id Identifiant de la commande
+     * @param mixed $data Source de données contenant les commandes
+     * @return array Informations de la commande formatées
+     */
     public function getCommande($id, $data)
     {
         $commande = $data->getCommandeById($id);
@@ -119,5 +178,4 @@ class Checking
 
         return $this->txt;
     }
-
 }

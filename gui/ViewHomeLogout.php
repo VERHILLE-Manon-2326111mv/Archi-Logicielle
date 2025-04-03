@@ -4,6 +4,11 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * @ViewHome
+ *
+ * Classe d'affichage de l'accueil lorsque l'utilisateur est connecté.
+ */
 class ViewHomeLogout extends View
 {
     public function __construct($login, $layout){

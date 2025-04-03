@@ -8,8 +8,18 @@ include_once "service/DataAccessInterface.php";
 use domain\User;
 include_once "domain/User.php";
 
+/**
+ * @ApiUsers
+ *
+ * Implémentation de l'API User
+ */
 class ApiUsers implements DataAccessInterface
 {
+    /**
+     * @return array
+     *
+     * Permet de récupérer tous les utilisateurs.
+     */
     public function getAllUsers(){
         $response = $this->curlApiToJSON("");
 
@@ -32,6 +42,11 @@ class ApiUsers implements DataAccessInterface
         return $users;
     }
 
+    /**
+     * @return array
+     *
+     * Permet de récupérer tous les clients du site.
+     */
     public function getAllClients()
     {
         $response = $this->curlApiToJSON("/client");
@@ -55,6 +70,13 @@ class ApiUsers implements DataAccessInterface
         return $clients;
     }
 
+    /**
+     * @param $login
+     * @param $password
+     * @return bool
+     *
+     * Permet de récupérer un utilisateur via son login et son mot de passe.
+     */
     public function getUser($login, $password){
         $users = $this->getAllUsers();
         foreach ($users as $user){
@@ -65,6 +87,12 @@ class ApiUsers implements DataAccessInterface
         return false;
     }
 
+    /**
+     * @param int $id
+     * @return User|null
+     *
+     * Permet de récupréer un utilisateur par son ID.
+     */
     public function getUserById(int $id){
         $response = $this->curlApiToJSON('/'. $id);
 
@@ -82,6 +110,12 @@ class ApiUsers implements DataAccessInterface
         }
     }
 
+    /**
+     * @param string $end
+     * @return mixed
+     *
+     * Permet de récupérer l'API.
+     */
     public function curlApiToJSON(string $end)
     {
         // URL de l'API

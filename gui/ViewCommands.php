@@ -4,6 +4,11 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * @ViewCommands
+ *
+ * Classe d'affichage des commandes.
+ */
 class ViewCommands extends View
 {
     public function __construct($layout, $id, $presenter,$data)
@@ -13,9 +18,9 @@ class ViewCommands extends View
         $this->title = 'Voir les commandes';
 
         if($id != null) {
-            $this->content = $presenter->getCurrentCommandesHTML($id,$data);
+            $this->content = $presenter->getCurrentCommandHTML($id,$data);
         } else {
-            $this->content = $presenter->getAllCommandes($data);
+            $this->content = $presenter->getAllCommandsHTML($data);
         }
 
         $this->content .= '<a href="/">Retour</a>';

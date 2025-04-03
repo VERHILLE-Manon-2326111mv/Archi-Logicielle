@@ -4,6 +4,11 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * @ViewProduct
+ *
+ * Classe d'affichage des produits.
+ */
 class ViewProducts extends View
 {
     public function __construct($layout, $id, $presenter, $data)

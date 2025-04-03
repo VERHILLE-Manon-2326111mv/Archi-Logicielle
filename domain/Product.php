@@ -2,6 +2,11 @@
 
 namespace domain;
 
+/**
+ * @Commandes
+ *
+ * Classe représentant un produit.
+ */
 class Product {
     protected $id_produit;
     protected $nom;

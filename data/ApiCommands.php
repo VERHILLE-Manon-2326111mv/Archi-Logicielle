@@ -8,9 +8,19 @@ include_once "service/DataAccessInterface.php";
 use domain\Commandes;
 include_once "domain/Commandes.php";
 
+/**
+ * @ApiCommands
+ *
+ * Implémentation de l'API Commande
+ */
 class ApiCommands implements DataAccessInterface
 {
-    public function getAllCommandes(){
+    /**
+     * @return array|null
+     *
+     * Permet de récupérer toutes les commandes.
+     */
+    public function getAllCommandsHTML(){
         $response = $this->curlApiToJSON("");
         if ($response == null) {
             return null;
@@ -35,6 +45,12 @@ class ApiCommands implements DataAccessInterface
         return $commandes;
     }
 
+    /**
+     * @param $id
+     * @return Commandes|null
+     *
+     * Permet de récupérer une commande par son ID.
+     */
     public function getCommandeById($id){
         $response = $this->curlApiToJSON($id);
         if($response !== null){
@@ -57,6 +73,12 @@ class ApiCommands implements DataAccessInterface
     }
 
 
+    /**
+     * @param string $end
+     * @return mixed
+     *
+     * Permet de récupérer l'API.
+     */
     public function curlApiToJSON(string $end)
     {
         if($end === ""){

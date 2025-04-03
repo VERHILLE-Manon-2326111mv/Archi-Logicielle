@@ -2,9 +2,20 @@
 
 namespace control;
 
+/**
+ * @Controllers
+ *
+ * Cette classe gère les actions des utilisateurs, des produits, des paniers et des commandes.
+ */
 class Controllers
 {
-
+    /**
+     * @param $userCheck
+     * @param $data
+     * @return string|void
+     *
+     * Permet l'authetification d'un utilisateur.
+     */
     public function  authenticateAction($userCheck, $data){
 
         // Si l'utilisateur n'a pas de session ouverte
@@ -34,6 +45,14 @@ class Controllers
         }
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @param $checking
+     * @return void
+     *
+     * Permet la génération des produits.
+     */
     public function productAction($id, $data, $checking)
     {
         if($id !== null){
@@ -44,6 +63,14 @@ class Controllers
         }
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @param $checking
+     * @return void
+     *
+     * Permet la génération des paniers.
+     */
     public function hamperAction($id, $data, $checking){
         if($id ==! null){
             $checking->getHamper($id, $data);
@@ -52,11 +79,19 @@ class Controllers
         }
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @param $checking
+     * @return void
+     *
+     * Permet la génération des commandes.
+     */
     public function commandeAction($id, $data, $checking){
         if($id ==! null){
             $checking->getCommande($id, $data);
         }else{
-            $checking->getAllCommandes($data);
+            $checking->getAllCommandsHTML($data);
         }
     }
 }

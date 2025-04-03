@@ -10,8 +10,18 @@ use function Sodium\add;
 
 include_once "domain/Hamper.php";
 
+/**
+ * @ApiHampers
+ *
+ * Implémentation de l'API Panier
+ */
 class ApiHampers implements DataAccessInterface
 {
+    /**
+     * @return array|null
+     *
+     * Permet de récupérer tous les paniers.
+     */
     public function getAllHampers()
     {
         $response = $this->curlApiToJSON("");
@@ -35,6 +45,12 @@ class ApiHampers implements DataAccessInterface
         return $hampers;
     }
 
+    /**
+     * @param $id
+     * @return Hamper|null
+     *
+     * Permet de récupérer un panier par son ID.
+     */
     public function getHamperById($id){
         $response = $this->curlApiToJSON($id);
 
@@ -54,6 +70,12 @@ class ApiHampers implements DataAccessInterface
         }
     }
 
+    /**
+     * @param string $end
+     * @return mixed
+     *
+     * Permet de récupérer l'API.
+     */
     public function curlApiToJSON(string $end)
     {
         if($end === ""){

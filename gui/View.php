@@ -1,6 +1,11 @@
 <?php
 namespace gui;
 
+/**
+ * @View
+ *
+ * Gère l'affichage des vues avec un layout.
+ */
 abstract class View
 {
     protected $title = '';

@@ -2,6 +2,11 @@
 
 namespace domain;
 
+/**
+ * @Commandes
+ *
+ * Classe représentant un panier.
+ */
 class Hamper
 {
     protected $id_product;

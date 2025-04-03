@@ -3,6 +3,12 @@ namespace gui;
 
 include_once "View.php";
 
+
+/**
+ * @ViewLogin
+ *
+ * Classe d'affichage de la page d'authentification.
+ */
 class ViewLogin extends View
 {
     public function __construct($layout)

@@ -2,6 +2,11 @@
 
 namespace domain;
 
+/**
+ * @Commandes
+ *
+ * Classe représentant une commande.
+ */
 class Commandes {
     protected $id;
     protected $id_user;

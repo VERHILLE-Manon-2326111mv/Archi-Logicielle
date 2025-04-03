@@ -4,6 +4,11 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * @ViewHome
+ *
+ * Classe d'affichage de l'accueil.
+ */
 class ViewHome extends View
 {
     public function __construct($layout){
